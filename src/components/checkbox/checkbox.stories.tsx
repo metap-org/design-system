@@ -12,11 +12,13 @@ const meta: Meta<typeof Checkbox> = {
 export default meta
 type Story = StoryObj<typeof Checkbox>
 
+function UncheckedDemo() {
+  const [checked, setChecked] = React.useState(false)
+  return <Checkbox checked={checked} onCheckedChange={setChecked} label="Accept terms and conditions" />
+}
+
 export const Unchecked: Story = {
-  render: () => {
-    const [checked, setChecked] = React.useState(false)
-    return <Checkbox checked={checked} onCheckedChange={setChecked} label="Accept terms and conditions" />
-  },
+  render: () => <UncheckedDemo />,
 }
 
 export const Checked: Story = {

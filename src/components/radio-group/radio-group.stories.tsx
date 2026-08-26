@@ -12,28 +12,32 @@ const meta: Meta<typeof RadioGroup> = {
 export default meta
 type Story = StoryObj<typeof RadioGroup>
 
+function DefaultDemo() {
+  const [value, setValue] = React.useState('option1')
+  return (
+    <RadioGroup value={value} onValueChange={setValue}>
+      <RadioGroupItem value="option1" label="Option 1" />
+      <RadioGroupItem value="option2" label="Option 2" />
+      <RadioGroupItem value="option3" label="Option 3" />
+    </RadioGroup>
+  )
+}
+
 export const Default: Story = {
-  render: () => {
-    const [value, setValue] = React.useState('option1')
-    return (
-      <RadioGroup value={value} onValueChange={setValue}>
-        <RadioGroupItem value="option1" label="Option 1" />
-        <RadioGroupItem value="option2" label="Option 2" />
-        <RadioGroupItem value="option3" label="Option 3" />
-      </RadioGroup>
-    )
-  },
+  render: () => <DefaultDemo />,
+}
+
+function WithDisabledItemDemo() {
+  const [value, setValue] = React.useState('option1')
+  return (
+    <RadioGroup value={value} onValueChange={setValue}>
+      <RadioGroupItem value="option1" label="Available" />
+      <RadioGroupItem value="option2" label="Unavailable (disabled)" disabled />
+      <RadioGroupItem value="option3" label="Also available" />
+    </RadioGroup>
+  )
 }
 
 export const WithDisabledItem: Story = {
-  render: () => {
-    const [value, setValue] = React.useState('option1')
-    return (
-      <RadioGroup value={value} onValueChange={setValue}>
-        <RadioGroupItem value="option1" label="Available" />
-        <RadioGroupItem value="option2" label="Unavailable (disabled)" disabled />
-        <RadioGroupItem value="option3" label="Also available" />
-      </RadioGroup>
-    )
-  },
+  render: () => <WithDisabledItemDemo />,
 }

@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { render, screen, waitFor, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { toast, ToastProvider } from './toast'
 
 // Helper: render with provider

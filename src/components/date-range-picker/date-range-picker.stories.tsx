@@ -34,23 +34,25 @@ export const Disabled: Story = {
   args: { label: 'Date range', disabled: true },
 }
 
+function ControlledDemo() {
+  const [value, setValue] = React.useState<DateRange | null>(null)
+  return (
+    <div className="flex flex-col gap-sm">
+      <DateRangePicker
+        value={value}
+        onValueChange={setValue}
+        label="Trip dates"
+        placeholder="Pick a date range"
+      />
+      <p className="text-sm text-muted-foreground">
+        From: <strong>{value?.from?.toLocaleDateString('en-US') ?? '—'}</strong>
+        {' · '}
+        To: <strong>{value?.to?.toLocaleDateString('en-US') ?? '—'}</strong>
+      </p>
+    </div>
+  )
+}
+
 export const Controlled: Story = {
-  render: () => {
-    const [value, setValue] = React.useState<DateRange | null>(null)
-    return (
-      <div className="flex flex-col gap-sm">
-        <DateRangePicker
-          value={value}
-          onValueChange={setValue}
-          label="Trip dates"
-          placeholder="Pick a date range"
-        />
-        <p className="text-sm text-muted-foreground">
-          From: <strong>{value?.from?.toLocaleDateString('en-US') ?? '—'}</strong>
-          {' · '}
-          To: <strong>{value?.to?.toLocaleDateString('en-US') ?? '—'}</strong>
-        </p>
-      </div>
-    )
-  },
+  render: () => <ControlledDemo />,
 }

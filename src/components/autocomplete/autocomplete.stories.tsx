@@ -39,49 +39,53 @@ export const Disabled: Story = {
   args: { label: 'Fruit', disabled: true },
 }
 
+function ControlledDemo() {
+  const [value, setValue] = React.useState<string | null>(null)
+  const [inputValue, setInputValue] = React.useState('')
+  return (
+    <div className="flex flex-col gap-sm">
+      <Autocomplete
+        options={FRUITS}
+        value={value ?? undefined}
+        onValueChange={v => setValue(v)}
+        inputValue={inputValue}
+        onInputChange={setInputValue}
+        label="Fruit"
+        placeholder="Type to search..."
+      />
+      <p className="text-sm text-muted-foreground">
+        Selected value: <strong>{value ?? '—'}</strong>
+      </p>
+    </div>
+  )
+}
+
 export const Controlled: Story = {
-  render: () => {
-    const [value, setValue] = React.useState<string | null>(null)
-    const [inputValue, setInputValue] = React.useState('')
-    return (
-      <div className="flex flex-col gap-sm">
-        <Autocomplete
-          options={FRUITS}
-          value={value ?? undefined}
-          onValueChange={v => setValue(v)}
-          inputValue={inputValue}
-          onInputChange={setInputValue}
-          label="Fruit"
-          placeholder="Type to search..."
-        />
-        <p className="text-sm text-muted-foreground">
-          Selected value: <strong>{value ?? '—'}</strong>
-        </p>
-      </div>
-    )
-  },
+  render: () => <ControlledDemo />,
+}
+
+function AsyncSearchDemo() {
+  const [value, setValue] = React.useState<string | null>(null)
+  const onSearch = async (query: string) => {
+    await new Promise(r => setTimeout(r, 400))
+    return FRUITS.filter(f => f.label.toLowerCase().includes(query.toLowerCase()))
+  }
+  return (
+    <div className="flex flex-col gap-sm">
+      <Autocomplete
+        onSearch={onSearch}
+        value={value ?? undefined}
+        onValueChange={setValue}
+        label="Fruit (async)"
+        placeholder="Type to search..."
+      />
+      <p className="text-sm text-muted-foreground">
+        Selected value: <strong>{value ?? '—'}</strong>
+      </p>
+    </div>
+  )
 }
 
 export const AsyncSearch: Story = {
-  render: () => {
-    const [value, setValue] = React.useState<string | null>(null)
-    const onSearch = async (query: string) => {
-      await new Promise(r => setTimeout(r, 400))
-      return FRUITS.filter(f => f.label.toLowerCase().includes(query.toLowerCase()))
-    }
-    return (
-      <div className="flex flex-col gap-sm">
-        <Autocomplete
-          onSearch={onSearch}
-          value={value ?? undefined}
-          onValueChange={setValue}
-          label="Fruit (async)"
-          placeholder="Type to search..."
-        />
-        <p className="text-sm text-muted-foreground">
-          Selected value: <strong>{value ?? '—'}</strong>
-        </p>
-      </div>
-    )
-  },
+  render: () => <AsyncSearchDemo />,
 }

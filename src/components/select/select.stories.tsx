@@ -40,17 +40,13 @@ export const Disabled: Story = {
   args: { disabled: true },
 }
 
+function ControlledDemo() {
+  const [value, setValue] = React.useState('')
+  return (
+    <Select options={OPTIONS} value={value} onValueChange={setValue} label="Fruit" placeholder="Select..." />
+  )
+}
+
 export const Controlled: Story = {
-  render: () => {
-    const [value, setValue] = React.useState('')
-    return (
-      <Select
-        options={OPTIONS}
-        value={value}
-        onValueChange={setValue}
-        label="Fruit"
-        placeholder="Select..."
-      />
-    )
-  },
+  render: () => <ControlledDemo />,
 }

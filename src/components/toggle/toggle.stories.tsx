@@ -15,25 +15,31 @@ const meta: Meta<typeof Toggle> = {
 export default meta
 type Story = StoryObj<typeof Toggle>
 
+function OffDemo() {
+  const [checked, setChecked] = React.useState(false)
+  return <Toggle checked={checked} onCheckedChange={setChecked} label="Enable notifications" />
+}
+
 export const Off: Story = {
-  render: () => {
-    const [checked, setChecked] = React.useState(false)
-    return <Toggle checked={checked} onCheckedChange={setChecked} label="Enable notifications" />
-  },
+  render: () => <OffDemo />,
+}
+
+function OnDemo() {
+  const [checked, setChecked] = React.useState(true)
+  return <Toggle checked={checked} onCheckedChange={setChecked} label="Dark mode" />
 }
 
 export const On: Story = {
-  render: () => {
-    const [checked, setChecked] = React.useState(true)
-    return <Toggle checked={checked} onCheckedChange={setChecked} label="Dark mode" />
-  },
+  render: () => <OnDemo />,
+}
+
+function SmallSizeDemo() {
+  const [checked, setChecked] = React.useState(true)
+  return <Toggle checked={checked} onCheckedChange={setChecked} label="Small toggle" size="sm" />
 }
 
 export const SmallSize: Story = {
-  render: () => {
-    const [checked, setChecked] = React.useState(true)
-    return <Toggle checked={checked} onCheckedChange={setChecked} label="Small toggle" size="sm" />
-  },
+  render: () => <SmallSizeDemo />,
 }
 
 export const Disabled: Story = {

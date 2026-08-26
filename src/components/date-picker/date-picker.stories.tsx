@@ -32,31 +32,28 @@ export const Disabled: Story = {
   args: { label: 'Date', disabled: true },
 }
 
+function ControlledDemo() {
+  const [value, setValue] = React.useState<Date | null>(null)
+  return (
+    <div className="flex flex-col gap-sm">
+      <DatePicker value={value} onValueChange={setValue} label="Select date" placeholder="Pick a date" />
+      <p className="text-sm text-muted-foreground">
+        Selected:{' '}
+        <strong>
+          {value
+            ? value.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })
+            : '—'}
+        </strong>
+      </p>
+    </div>
+  )
+}
+
 export const Controlled: Story = {
-  render: () => {
-    const [value, setValue] = React.useState<Date | null>(null)
-    return (
-      <div className="flex flex-col gap-sm">
-        <DatePicker
-          value={value}
-          onValueChange={setValue}
-          label="Select date"
-          placeholder="Pick a date"
-        />
-        <p className="text-sm text-muted-foreground">
-          Selected:{' '}
-          <strong>
-            {value
-              ? value.toLocaleDateString('en-US', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })
-              : '—'}
-          </strong>
-        </p>
-      </div>
-    )
-  },
+  render: () => <ControlledDemo />,
 }
