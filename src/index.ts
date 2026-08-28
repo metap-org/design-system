@@ -1,4 +1,7 @@
 export { Button, buttonVariants, type ButtonProps } from './components/button'
+export { IconButton, type IconButtonProps } from './components/icon-button'
+export { Label, type LabelProps } from './components/label'
+export { Textarea, type TextareaProps } from './components/textarea'
 export { Avatar, type AvatarProps } from './components/avatar'
 export { Chip, chipVariants, type ChipProps } from './components/chip'
 export { Input, type InputProps } from './components/input'
