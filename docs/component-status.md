@@ -46,12 +46,14 @@ nào cần review, cái nào còn thiếu" — đọc file này trước khi h�
 | **Separator** | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review |
 | **Skeleton** | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review |
 | **Form + FormField** | 3 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review. Theo đúng spec trong `readme.md` (`react-hook-form` + `zod` + `@hookform/resolvers`). `zod` v4/`@hookform/resolvers` v5 đổi generic signature so với bản readme viết sẵn — `FormProps.schema` phải khai là `ZodType<T, T>` (input=output=T) thay vì `ZodSchema<T>` để khớp `Resolver<T, any, T>` mà `useForm<T>` cần, nếu không `tsc` build:types fail. Cũng thêm `src/lib/validators.ts` (`patterns.phoneVN/email/noSpecialChars`) đúng như "Việc cần làm" trong spec |
+| **Dialog** *(+ Trigger/Close/Portal/Overlay/Content/Header/Footer/Title/Description)* | 4 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-dialog` | Chưa | Mới build, chưa ai review. Animation dùng transition CSS thuần (`transition-opacity`/`transition-[opacity,transform]` + `data-[state=]`) thay vì `animate-in`/`fade-in-0`/`zoom-in-95` — project chưa cài plugin `tailwindcss-animate`, các class đó sẽ không render gì (không lỗi nhưng cũng không có hiệu ứng); nếu sau này cần animation phức tạp hơn (keyframe) thì cân nhắc thêm plugin |
+| **Sheet** *(+ Trigger/Close/Portal/Overlay/Content/Header/Footer/Title/Description)* | 4 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-dialog` | Chưa | Mới build, chưa ai review. Dùng chung primitive với Dialog (đúng như shadcn/ui gốc), khác nhau ở styling — `side` prop (right/left/top/bottom) chọn cạnh trượt vào |
+| **AlertDialog** *(+ Trigger/Portal/Overlay/Content/Header/Footer/Title/Description/Action/Cancel)* | 4 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-alert-dialog` | Chưa | Mới build, chưa ai review. Lưu ý: Radix AlertDialog **có** đóng khi nhấn Escape theo mặc định (giống Dialog, không phải hành vi "bắt buộc chọn nút" như một số lib khác) — đã verify bằng test, không phải giả định |
 
 ## Chưa build (theo đúng thứ tự ưu tiên còn lại trong readme.md)
 
 | Component | Nhóm ưu tiên | Ghi chú |
 |---|---|---|
-| Dialog, Sheet, AlertDialog | 4 | Quyết định Radix đã chốt 2026-08-28 (xem ghi chú "Dùng Radix?" ở trên) — build tiếp theo bằng `@radix-ui/react-dialog`/`@radix-ui/react-alert-dialog` |
 | Table | 5 | — |
 | NumberInput | 6 | Component duy nhất còn thiếu trong nhóm 6 |
 | Alert, Progress, Spinner | 7 | — |
