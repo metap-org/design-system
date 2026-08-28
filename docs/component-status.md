@@ -50,12 +50,12 @@ nào cần review, cái nào còn thiếu" — đọc file này trước khi h�
 | **Sheet** *(+ Trigger/Close/Portal/Overlay/Content/Header/Footer/Title/Description)* | 4 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-dialog` | Chưa | Mới build, chưa ai review. Dùng chung primitive với Dialog (đúng như shadcn/ui gốc), khác nhau ở styling — `side` prop (right/left/top/bottom) chọn cạnh trượt vào |
 | **AlertDialog** *(+ Trigger/Portal/Overlay/Content/Header/Footer/Title/Description/Action/Cancel)* | 4 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-alert-dialog` | Chưa | Mới build, chưa ai review. Lưu ý: Radix AlertDialog **có** đóng khi nhấn Escape theo mặc định (giống Dialog, không phải hành vi "bắt buộc chọn nút" như một số lib khác) — đã verify bằng test, không phải giả định |
 | **Table** *(+ TableHeader/TableBody/TableFooter/TableRow/TableHead/TableCell/TableCaption)* | 5 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết — semantic HTML `<table>`, không cần Radix) | Chưa | Mới build, chưa ai review. `Table` tự bọc trong `div.overflow-x-auto` để bảng rộng không phá layout trên mobile |
+| **NumberInput** | 6 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review — component cuối cùng còn thiếu trong nhóm 6, nhóm 6 giờ đã đủ. Hỗ trợ cả controlled (`value`+`onChange`) và uncontrolled (`defaultValue`); nút tăng/giảm tự vô hiệu hoá khi chạm `min`/`max`; ẩn spinner mặc định của trình duyệt (`appearance-none`) để dùng UI tự thiết kế |
 
 ## Chưa build (theo đúng thứ tự ưu tiên còn lại trong readme.md)
 
 | Component | Nhóm ưu tiên | Ghi chú |
 |---|---|---|
-| NumberInput | 6 | Component duy nhất còn thiếu trong nhóm 6 |
 | Alert, Progress, Spinner | 7 | — |
 | Tabs, Accordion, DropdownMenu, Popover, Tooltip, Breadcrumb, Pagination | 8 | Phần lớn cần Radix cho focus-trap/positioning (Popover/DropdownMenu/Tooltip đặc biệt khó làm đúng a11y nếu tự viết tay) |
 

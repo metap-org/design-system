@@ -79,6 +79,7 @@ export {
   type TableCellProps,
   type TableCaptionProps,
 } from './components/table'
+export { NumberInput, type NumberInputProps } from './components/number-input'
 export { Avatar, type AvatarProps } from './components/avatar'
 export { Chip, chipVariants, type ChipProps } from './components/chip'
 export { Input, type InputProps } from './components/input'
