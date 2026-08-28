@@ -1,6 +1,6 @@
 # Component status tracker
 
-Bảng theo dõi độ hoàn thiện từng component trong `@ui/ui-lib` — cập nhật mỗi khi thêm/sửa
+Bảng theo dõi độ hoàn thiện từng component trong `@metap/ui` — cập nhật mỗi khi thêm/sửa
 component, không phải tài liệu tĩnh viết một lần. Nguồn chân lý cho "component nào đã có, cái
 nào cần review, cái nào còn thiếu" — đọc file này trước khi hỏi lại hoặc build trùng.
 
