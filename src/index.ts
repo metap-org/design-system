@@ -91,6 +91,39 @@ export {
 } from './components/alert'
 export { Progress, type ProgressProps } from './components/progress'
 export { Spinner, type SpinnerProps } from './components/spinner'
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './components/tabs'
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './components/accordion'
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuGroup,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuRadioGroup,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from './components/dropdown-menu'
+export { Popover, PopoverTrigger, PopoverAnchor, PopoverContent } from './components/popover'
+export { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from './components/tooltip'
+export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  type BreadcrumbProps,
+  type BreadcrumbListProps,
+  type BreadcrumbItemProps,
+  type BreadcrumbLinkProps,
+  type BreadcrumbPageProps,
+  type BreadcrumbSeparatorProps,
+} from './components/breadcrumb'
+export { Pagination, type PaginationProps } from './components/pagination'
 export { Avatar, type AvatarProps } from './components/avatar'
 export { Chip, chipVariants, type ChipProps } from './components/chip'
 export { Input, type InputProps } from './components/input'

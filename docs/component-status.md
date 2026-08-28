@@ -54,12 +54,19 @@ nào cần review, cái nào còn thiếu" — đọc file này trước khi h�
 | **Alert** *(+ AlertTitle/AlertDescription)* | 7 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review. 2 variant (default/destructive), `role="alert"` |
 | **Progress** | 7 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review. `role="progressbar"` + `aria-valuenow/min/max`, tự clamp `value` vào khoảng `[0, max]` |
 | **Spinner** | 7 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review — nhóm 7 giờ đã đủ. `role="status"` + text ẩn cho screen reader (`label` prop, mặc định "Đang tải...") |
+| **Tabs** | 8 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-tabs` | Chưa | Mới build, chưa ai review |
+| **Accordion** | 8 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-accordion` | Chưa | Mới build, chưa ai review. Không có animation mở/đóng theo chiều cao (cần keyframe + `tailwindcss-animate`, project chưa cài) — đóng/mở tức thời, không tệ về UX nhưng không mượt như bản shadcn/ui gốc |
+| **DropdownMenu** *(+ Trigger/Group/Portal/Sub/RadioGroup/Content/Item/CheckboxItem/RadioItem/Label/Separator)* | 8 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-dropdown-menu` | Chưa | Mới build, chưa ai review |
+| **Popover** *(+ Trigger/Anchor/Content)* | 8 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-popover` | Chưa | Mới build, chưa ai review |
+| **Tooltip** *(+ TooltipProvider/Trigger/Content)* | 8 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-tooltip` | Chưa | Mới build, chưa ai review. App dùng phải tự bọc `TooltipProvider` ở gốc cây (đúng pattern Radix, không tự động bọc trong `Tooltip` để tránh nhiều provider lồng nhau không cần thiết nếu app có nhiều tooltip). Test "đóng khi rời hover" phải dùng phím Escape thay vì `unhover` thật — Radix Tooltip theo dõi toạ độ con trỏ thật để quyết định có nên đóng không, jsdom không mô phỏng layout/toạ độ thật nên `unhover` không đáng tin cậy trong test |
+| **Breadcrumb** *(+ List/Item/Link/Page/Separator)* | 8 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết — semantic `nav`/`ol`, không cần Radix) | Chưa | Mới build, chưa ai review |
+| **Pagination** | 8 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết — không cần focus-trap/positioning) | Chưa | Mới build, chưa ai review. Khác với shadcn/ui gốc (các mảnh ghép rời PaginationContent/PaginationItem/...) — đóng gói thành 1 component "thông minh" nhận `page`/`totalPages`/`onPageChange`, tự tính danh sách trang kèm dấu "…" (thuật toán sibling/ellipsis chuẩn), thực dụng hơn cho việc dùng lại trực tiếp giữa grocery-app/F&B/DocFlow |
 
-## Chưa build (theo đúng thứ tự ưu tiên còn lại trong readme.md)
+**Toàn bộ danh mục 8 nhóm trong readme.md đã build xong (2026-08-28).** Avatar (nhóm 8) đã build từ trước (2026-08-26, cùng đợt 12 component khởi tạo) nên không lặp lại ở đây.
 
-| Component | Nhóm ưu tiên | Ghi chú |
-|---|---|---|
-| Tabs, Accordion, DropdownMenu, Popover, Tooltip, Breadcrumb, Pagination | 8 | Phần lớn cần Radix cho focus-trap/positioning (Popover/DropdownMenu/Tooltip đặc biệt khó làm đúng a11y nếu tự viết tay) |
+## Chưa build
+
+*(trống — toàn bộ danh mục chuẩn trong readme.md đã build. Việc còn lại là review + xử lý các mục trong "Cần cải thiện" ở bảng trên, ví dụ: thiếu test cho Autocomplete/DatePicker/DateRangePicker, 2 test fail ở Toast, tên lệch danh mục chuẩn của Toggle/Autocomplete.)*
 
 ## Nợ hạ tầng đã phát hiện (không phải component cụ thể)
 
