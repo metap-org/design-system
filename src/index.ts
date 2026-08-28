@@ -2,6 +2,24 @@ export { Button, buttonVariants, type ButtonProps } from './components/button'
 export { IconButton, type IconButtonProps } from './components/icon-button'
 export { Label, type LabelProps } from './components/label'
 export { Textarea, type TextareaProps } from './components/textarea'
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  type CardProps,
+  type CardHeaderProps,
+  type CardTitleProps,
+  type CardDescriptionProps,
+  type CardContentProps,
+  type CardFooterProps,
+} from './components/card'
+export { Badge, badgeVariants, type BadgeProps } from './components/badge'
+export { Tag, tagVariants, type TagProps } from './components/tag'
+export { Separator, type SeparatorProps } from './components/separator'
+export { Skeleton, type SkeletonProps } from './components/skeleton'
 export { Avatar, type AvatarProps } from './components/avatar'
 export { Chip, chipVariants, type ChipProps } from './components/chip'
 export { Input, type InputProps } from './components/input'

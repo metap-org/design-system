@@ -39,12 +39,16 @@ nào cần review, cái nào còn thiếu" — đọc file này trước khi h�
 | DatePicker | 6 | Thiếu test | 2026-08-26 | 2026-08-26 | ✗ | ✓ | ✗ (tự viết) | Chưa | Không có file test |
 | DateRangePicker | 6 (mở rộng) | Thiếu test | 2026-08-26 | 2026-08-26 | ✗ | ✓ | ✗ (tự viết) | Chưa | Không có file test; không nằm trong danh mục chuẩn gốc (mở rộng hợp lý từ DatePicker) |
 | Toast | 7 | 2 test fail | 2026-08-26 | 2026-08-26 | ✓ (2 fail) | ✓ | ✗ (tự viết) | Chưa | 2 test timeout với `vi.useFakeTimers()` (`auto-dismisses after duration ms`, `does not auto-dismiss when duration is 0`) — cần sửa cách advance fake timer trong test, không phải bug ở component |
+| **Card** *(+ CardHeader/CardTitle/CardDescription/CardContent/CardFooter)* | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review |
+| **Badge** | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review. Thêm 2 variant `success`/`warning` ngoài danh mục shadcn gốc (default/secondary/destructive/outline) vì thực tế hay cần trạng thái "hoàn thành"/"đang chờ" |
+| **Tag** | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review. Không có trong danh mục chuẩn gốc — thêm để tách rõ 2 nhu cầu khác nhau đang bị gộp chung vào Chip/Badge: label phân loại tự do theo màu (`color` prop: gray/blue/green/yellow/red/purple, không có ý nghĩa trạng thái) so với Badge (semantic status) và Chip (có thể xoá) |
+| **Separator** | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review |
+| **Skeleton** | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review |
 
 ## Chưa build (theo đúng thứ tự ưu tiên còn lại trong readme.md)
 
 | Component | Nhóm ưu tiên | Ghi chú |
 |---|---|---|
-| Card, Badge, Tag, Separator, Skeleton | 2 | Còn thiếu cả 5 — build tiếp theo |
 | Form, FormField | 3 | Spec chi tiết đã viết sẵn trong `readme.md` ("Spec chi tiết: Form controls + validation props") — không cần thiết kế lại, cần thêm dependency `react-hook-form`/`zod`/`@hookform/resolvers` |
 | Dialog, Sheet, AlertDialog | 4 | Cần quyết định Radix trước khi build (xem ghi chú "Dùng Radix?" ở trên) |
 | Table | 5 | — |
