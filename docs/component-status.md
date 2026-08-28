@@ -14,11 +14,12 @@ nào cần review, cái nào còn thiếu" — đọc file này trước khi h�
 - **Nhóm ưu tiên**: đúng "Thứ tự build" trong `readme.md` (8 nhóm, xếp theo tần suất dùng chung
   giữa grocery-app/F&B app/DocFlow).
 - **Dùng Radix?**: `readme.md`'s Stack ghi "Tailwind CSS + shadcn/ui (Radix UI primitives)", nhưng
-  thực tế **chưa component nào dùng `@radix-ui/react-*`** (kiểm tra 2026-08-28, `package.json`
-  không có dependency Radix nào) — mọi component tự viết tay bằng HTML/ARIA thuần. Ghi nhận ở đây
-  để nhóm 4/8 (Dialog/Sheet/AlertDialog/Popover/DropdownMenu/Tooltip/Accordion — cần focus-trap,
-  portal, positioning) biết phải quyết định trước khi build: tiếp tục tự viết tay (rủi ro a11y cao
-  hơn cho overlay) hay bắt đầu thêm Radix thật cho nhóm này.
+  tới 2026-08-28 (trước Group 3) **chưa component nào dùng `@radix-ui/react-*`** — mọi component
+  tự viết tay bằng HTML/ARIA thuần. **Quyết định chốt 2026-08-28**: dùng Radix thật cho các
+  component overlay/phức tạp cần focus-trap/portal/positioning (Dialog/Sheet/AlertDialog ở nhóm 4;
+  Tabs/Accordion/DropdownMenu/Popover/Tooltip ở nhóm 8) — cài `@radix-ui/react-*` tương ứng từng
+  component, không tự viết tay nữa. Breadcrumb/Pagination (nhóm 8) và mọi component đã build trước
+  đó vẫn giữ nguyên tự viết tay — không cần Radix cho semantic nav/label thuần.
 
 ## Đã build
 
@@ -44,13 +45,13 @@ nào cần review, cái nào còn thiếu" — đọc file này trước khi h�
 | **Tag** | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review. Không có trong danh mục chuẩn gốc — thêm để tách rõ 2 nhu cầu khác nhau đang bị gộp chung vào Chip/Badge: label phân loại tự do theo màu (`color` prop: gray/blue/green/yellow/red/purple, không có ý nghĩa trạng thái) so với Badge (semantic status) và Chip (có thể xoá) |
 | **Separator** | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review |
 | **Skeleton** | 2 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review |
+| **Form + FormField** | 3 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review. Theo đúng spec trong `readme.md` (`react-hook-form` + `zod` + `@hookform/resolvers`). `zod` v4/`@hookform/resolvers` v5 đổi generic signature so với bản readme viết sẵn — `FormProps.schema` phải khai là `ZodType<T, T>` (input=output=T) thay vì `ZodSchema<T>` để khớp `Resolver<T, any, T>` mà `useForm<T>` cần, nếu không `tsc` build:types fail. Cũng thêm `src/lib/validators.ts` (`patterns.phoneVN/email/noSpecialChars`) đúng như "Việc cần làm" trong spec |
 
 ## Chưa build (theo đúng thứ tự ưu tiên còn lại trong readme.md)
 
 | Component | Nhóm ưu tiên | Ghi chú |
 |---|---|---|
-| Form, FormField | 3 | Spec chi tiết đã viết sẵn trong `readme.md` ("Spec chi tiết: Form controls + validation props") — không cần thiết kế lại, cần thêm dependency `react-hook-form`/`zod`/`@hookform/resolvers` |
-| Dialog, Sheet, AlertDialog | 4 | Cần quyết định Radix trước khi build (xem ghi chú "Dùng Radix?" ở trên) |
+| Dialog, Sheet, AlertDialog | 4 | Quyết định Radix đã chốt 2026-08-28 (xem ghi chú "Dùng Radix?" ở trên) — build tiếp theo bằng `@radix-ui/react-dialog`/`@radix-ui/react-alert-dialog` |
 | Table | 5 | — |
 | NumberInput | 6 | Component duy nhất còn thiếu trong nhóm 6 |
 | Alert, Progress, Spinner | 7 | — |
@@ -61,4 +62,5 @@ nào cần review, cái nào còn thiếu" — đọc file này trước khi h�
 | Ngày phát hiện | Nội dung | Trạng thái |
 |---|---|---|
 | 2026-08-28 | `cn()` (`src/lib/utils.ts`) dùng `twMerge` mặc định, không nhận diện scale spacing tuỳ biến (`xs/sm/md/lg/xl` trong `tokens.spacing`) — class dùng token này không merge/đè đúng nhau (vd `p-0` không thắng được `px-md py-sm`), phát hiện khi build IconButton | **Đã sửa** — `extendTailwindMerge` khai báo đúng scale |
-| 2026-08-26 (kiểm tra 2026-08-28) | Stack đã chọn Tailwind + shadcn/ui (Radix UI primitives) nhưng chưa cài `@radix-ui/react-*` nào, mọi component hiện có đều tự viết tay | Chưa xử lý — cần quyết định trước nhóm 4/8 |
+| 2026-08-26 (kiểm tra 2026-08-28) | Stack đã chọn Tailwind + shadcn/ui (Radix UI primitives) nhưng chưa cài `@radix-ui/react-*` nào, mọi component hiện có đều tự viết tay | **Đã quyết định 2026-08-28** — dùng Radix thật cho nhóm 4/8's overlay component, cài dần theo từng component |
+| 2026-08-28 | `zod` v4 + `@hookform/resolvers` v5's generic signature đổi so với ví dụ trong `readme.md` (`ZodSchema<T>` không còn khớp `Resolver<T, any, T>` mà `useForm<T>` cần) — `tsc build:types` fail nếu giữ nguyên type từ spec | **Đã sửa** — `Form`'s `schema` prop khai kiểu `ZodType<T, T>` thay vì `ZodSchema<T>` |
