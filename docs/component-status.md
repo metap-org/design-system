@@ -51,12 +51,14 @@ nào cần review, cái nào còn thiếu" — đọc file này trước khi h�
 | **AlertDialog** *(+ Trigger/Portal/Overlay/Content/Header/Footer/Title/Description/Action/Cancel)* | 4 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✓ `@radix-ui/react-alert-dialog` | Chưa | Mới build, chưa ai review. Lưu ý: Radix AlertDialog **có** đóng khi nhấn Escape theo mặc định (giống Dialog, không phải hành vi "bắt buộc chọn nút" như một số lib khác) — đã verify bằng test, không phải giả định |
 | **Table** *(+ TableHeader/TableBody/TableFooter/TableRow/TableHead/TableCell/TableCaption)* | 5 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết — semantic HTML `<table>`, không cần Radix) | Chưa | Mới build, chưa ai review. `Table` tự bọc trong `div.overflow-x-auto` để bảng rộng không phá layout trên mobile |
 | **NumberInput** | 6 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review — component cuối cùng còn thiếu trong nhóm 6, nhóm 6 giờ đã đủ. Hỗ trợ cả controlled (`value`+`onChange`) và uncontrolled (`defaultValue`); nút tăng/giảm tự vô hiệu hoá khi chạm `min`/`max`; ẩn spinner mặc định của trình duyệt (`appearance-none`) để dùng UI tự thiết kế |
+| **Alert** *(+ AlertTitle/AlertDescription)* | 7 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review. 2 variant (default/destructive), `role="alert"` |
+| **Progress** | 7 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review. `role="progressbar"` + `aria-valuenow/min/max`, tự clamp `value` vào khoảng `[0, max]` |
+| **Spinner** | 7 | Done | 2026-08-28 | 2026-08-28 | ✓ | ✓ | ✗ (tự viết) | Chưa | Mới build, chưa ai review — nhóm 7 giờ đã đủ. `role="status"` + text ẩn cho screen reader (`label` prop, mặc định "Đang tải...") |
 
 ## Chưa build (theo đúng thứ tự ưu tiên còn lại trong readme.md)
 
 | Component | Nhóm ưu tiên | Ghi chú |
 |---|---|---|
-| Alert, Progress, Spinner | 7 | — |
 | Tabs, Accordion, DropdownMenu, Popover, Tooltip, Breadcrumb, Pagination | 8 | Phần lớn cần Radix cho focus-trap/positioning (Popover/DropdownMenu/Tooltip đặc biệt khó làm đúng a11y nếu tự viết tay) |
 
 ## Nợ hạ tầng đã phát hiện (không phải component cụ thể)

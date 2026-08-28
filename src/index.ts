@@ -80,6 +80,17 @@ export {
   type TableCaptionProps,
 } from './components/table'
 export { NumberInput, type NumberInputProps } from './components/number-input'
+export {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  alertVariants,
+  type AlertProps,
+  type AlertTitleProps,
+  type AlertDescriptionProps,
+} from './components/alert'
+export { Progress, type ProgressProps } from './components/progress'
+export { Spinner, type SpinnerProps } from './components/spinner'
 export { Avatar, type AvatarProps } from './components/avatar'
 export { Chip, chipVariants, type ChipProps } from './components/chip'
 export { Input, type InputProps } from './components/input'
