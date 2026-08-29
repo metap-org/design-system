@@ -92,7 +92,12 @@ export {
 export { Progress, type ProgressProps } from './components/progress'
 export { Spinner, type SpinnerProps } from './components/spinner'
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './components/tabs'
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './components/accordion'
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from './components/accordion'
 export {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -126,6 +131,8 @@ export {
 export { Pagination, type PaginationProps } from './components/pagination'
 export { Avatar, type AvatarProps } from './components/avatar'
 export { Chip, chipVariants, type ChipProps } from './components/chip'
+export { TagsInput, type TagsInputProps } from './components/tags-input'
+export { SuggestInput, type SuggestInputProps } from './components/suggest-input'
 export { Input, type InputProps } from './components/input'
 export { Checkbox, type CheckboxProps } from './components/checkbox'
 export {
@@ -136,8 +143,17 @@ export {
 } from './components/radio-group'
 export { Toggle, type ToggleProps } from './components/toggle'
 export { Select, type SelectOption, type SelectProps } from './components/select'
+export {
+  MultiSelect,
+  type MultiSelectOption,
+  type MultiSelectProps,
+} from './components/multi-select'
 export { toast, ToastProvider, type ToastVariant, type ToastEntry } from './components/toast'
-export { Autocomplete, type AutocompleteOption, type AutocompleteProps } from './components/autocomplete'
+export {
+  Autocomplete,
+  type AutocompleteOption,
+  type AutocompleteProps,
+} from './components/autocomplete'
 export { DatePicker, type DatePickerProps } from './components/date-picker'
 export {
   DateRangePicker,
