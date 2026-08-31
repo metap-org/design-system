@@ -60,23 +60,26 @@ describe('toast / ToastProvider', () => {
     })
   })
 
-  it('auto-dismisses after duration ms', async () => {
+  it('auto-dismisses after duration ms', () => {
+    // `toast()` updates state synchronously (a plain listener callback, not a Promise/timer
+    // chain), so the DOM is already current by the time each `act()` call returns — asserting
+    // synchronously (`getByRole`/`queryByRole`) instead of `findByRole`/`waitFor` avoids relying
+    // on their internal setTimeout/setInterval polling, which fake timers pause indefinitely
+    // (component-status.md's Toast row: "not a bug in the component, a fake-timer test issue").
     vi.useFakeTimers()
     renderWithProvider()
     act(() => { toast('Auto', { duration: 1000 }) })
-    await screen.findByRole('alert')
+    expect(screen.getByRole('alert')).toBeInTheDocument()
     act(() => { vi.advanceTimersByTime(1100) })
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeNull()
-    })
+    expect(screen.queryByRole('alert')).toBeNull()
     vi.useRealTimers()
   })
 
-  it('does not auto-dismiss when duration is 0', async () => {
+  it('does not auto-dismiss when duration is 0', () => {
     vi.useFakeTimers()
     renderWithProvider()
     act(() => { toast('Sticky', { duration: 0 }) })
-    await screen.findByRole('alert')
+    expect(screen.getByRole('alert')).toBeInTheDocument()
     act(() => { vi.advanceTimersByTime(10000) })
     expect(screen.getByRole('alert')).toBeInTheDocument()
     vi.useRealTimers()

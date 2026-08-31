@@ -1,4 +1,6 @@
 export { Button, buttonVariants, type ButtonProps } from './components/button'
+export { ButtonGroup, type ButtonGroupProps } from './components/button-group'
+export { TreeItem, type TreeItemProps } from './components/tree-item'
 export { IconButton, type IconButtonProps } from './components/icon-button'
 export { Label, type LabelProps } from './components/label'
 export { Textarea, type TextareaProps } from './components/textarea'
@@ -142,6 +144,10 @@ export {
   type RadioGroupItemProps,
 } from './components/radio-group'
 export { Toggle, type ToggleProps } from './components/toggle'
+// Aliases matching the standard shadcn/ui naming (docs/component-status.md's "Cần cải thiện" note
+// for Toggle/Autocomplete) — kept alongside the original names rather than renaming, so existing
+// call sites don't break.
+export { Toggle as Switch, type ToggleProps as SwitchProps } from './components/toggle'
 export { Select, type SelectOption, type SelectProps } from './components/select'
 export {
   MultiSelect,
@@ -154,7 +160,13 @@ export {
   type AutocompleteOption,
   type AutocompleteProps,
 } from './components/autocomplete'
+export {
+  Autocomplete as Combobox,
+  type AutocompleteOption as ComboboxOption,
+  type AutocompleteProps as ComboboxProps,
+} from './components/autocomplete'
 export { DatePicker, type DatePickerProps } from './components/date-picker'
+export { DateTimePicker, type DateTimePickerProps } from './components/date-time-picker'
 export {
   DateRangePicker,
   type DateRange,

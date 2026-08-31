@@ -7,6 +7,18 @@ export interface AutocompleteOption {
   disabled?: boolean
 }
 
+// Module-level, not `options: staticOptions = []` inline — a default *parameter* literal is a
+// new array every render it applies to (i.e. whenever the caller omits `options`, the exact
+// `onSearch`-without-`options` shape a search-as-you-type consumer uses). That reference feeds
+// straight into the filter `useEffect`'s dependency array below, so on every render it looks
+// "changed" even though it's logically still empty — re-triggering the effect, which (in the
+// `onSearch` branch) calls `setLoading`/`setFilteredOptions`, causing another render, another
+// "new" empty array, and so on forever. Found live via `autocomplete.test.tsx`'s onSearch test,
+// which reliably ran the suite out of heap (~2GB, several minutes) before this fix — not a test
+// bug, a real infinite-render loop in this component whenever `onSearch` was used without
+// `options`.
+const EMPTY_OPTIONS: AutocompleteOption[] = []
+
 export interface AutocompleteProps {
   options?: AutocompleteOption[]
   onSearch?: (query: string) => Promise<AutocompleteOption[]> | AutocompleteOption[]
@@ -27,7 +39,7 @@ export const Autocomplete = React.forwardRef<HTMLInputElement, AutocompleteProps
   (
     {
       className,
-      options: staticOptions = [],
+      options: staticOptions = EMPTY_OPTIONS,
       onSearch,
       value,
       onValueChange,

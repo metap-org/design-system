@@ -1,9 +1,15 @@
 import * as React from 'react'
 import { DayPicker } from 'react-day-picker'
 import { cn } from '../../lib/utils'
-import { dayPickerClassNames } from './day-picker-classnames'
+import { dayPickerClassNames } from '../date-picker/day-picker-classnames'
 
-export interface DatePickerProps {
+// `DatePicker` only ever picks a calendar day (no time-of-day component) — this is its
+// datetime-capable sibling, added because field kind `"datetime"` was reusing `DatePicker` and
+// silently losing the hour:minute:second part on every round trip (see
+// docs/component-status.md's Gap đã biết list, carried over from platform-ui/README.md before the
+// fix). Kept as a separate component rather than a `DatePicker` prop so `DatePicker` stays a pure
+// date-only picker for callers that only ever want a day.
+export interface DateTimePickerProps {
   value?: Date | null
   onValueChange?: (date: Date | null) => void
   placeholder?: string
@@ -15,12 +21,26 @@ export interface DatePickerProps {
   id?: string
 }
 
-export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
+function withTimeOfDay(date: Date, time: Date): Date {
+  const next = new Date(date)
+  next.setHours(time.getHours(), time.getMinutes(), time.getSeconds(), 0)
+  return next
+}
+
+function timeInputValue(date: Date | null | undefined): string {
+  if (!date) return ''
+  const hh = String(date.getHours()).padStart(2, '0')
+  const mm = String(date.getMinutes()).padStart(2, '0')
+  const ss = String(date.getSeconds()).padStart(2, '0')
+  return `${hh}:${mm}:${ss}`
+}
+
+export const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
   (
     {
       value,
       onValueChange,
-      placeholder = 'Pick a date',
+      placeholder = 'Pick a date & time',
       label,
       error,
       helperText,
@@ -41,12 +61,29 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
     const wrapperRef = React.useRef<HTMLDivElement>(null)
 
     const formatted = value
-      ? value.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+      ? value.toLocaleString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
       : undefined
 
-    const handleSelect = (date: Date | undefined) => {
-      onValueChange?.(date ?? null)
-      setOpen(false)
+    const handleSelectDate = (date: Date | undefined) => {
+      if (!date) {
+        onValueChange?.(null)
+        return
+      }
+      onValueChange?.(value ? withTimeOfDay(date, value) : date)
+    }
+
+    const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!value) return
+      const [hh, mm, ss] = e.target.value.split(':').map(Number)
+      const next = new Date(value)
+      next.setHours(hh ?? 0, mm ?? 0, ss ?? 0, 0)
+      onValueChange?.(next)
     }
 
     React.useEffect(() => {
@@ -102,10 +139,8 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
               strokeLinejoin="round"
               aria-hidden="true"
             >
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
             </svg>
           </button>
 
@@ -113,17 +148,35 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             <div
               id={calendarId}
               role="dialog"
-              aria-label="Date picker"
-              className="absolute z-50 mt-1 rounded-md border border-border bg-popover p-md shadow-md"
+              aria-label="Date & time picker"
+              className="absolute z-50 mt-1 flex flex-col gap-sm rounded-md border border-border bg-popover p-md shadow-md"
             >
               <DayPicker
                 mode="single"
                 selected={value ?? undefined}
-                onSelect={handleSelect}
+                onSelect={handleSelectDate}
                 month={month}
                 onMonthChange={setMonth}
                 classNames={dayPickerClassNames}
               />
+              <div className="flex items-center gap-2 border-t border-border pt-sm">
+                <label htmlFor={`${triggerId}-time`} className="text-sm text-muted-foreground">
+                  Time
+                </label>
+                <input
+                  id={`${triggerId}-time`}
+                  type="time"
+                  step={1}
+                  disabled={!value}
+                  value={timeInputValue(value)}
+                  onChange={handleTimeChange}
+                  className={cn(
+                    'flex-1 rounded-md border border-input bg-background px-sm py-1 text-sm',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+                    'disabled:cursor-not-allowed disabled:opacity-50'
+                  )}
+                />
+              </div>
             </div>
           )}
         </div>
@@ -141,4 +194,4 @@ export const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
     )
   }
 )
-DatePicker.displayName = 'DatePicker'
+DateTimePicker.displayName = 'DateTimePicker'

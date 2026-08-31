@@ -7,7 +7,7 @@ const meta: Meta<typeof Button> = {
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'select', options: ['default', 'outline', 'ghost'] },
+    variant: { control: 'select', options: ['default', 'outline', 'ghost', 'destructive'] },
     size: { control: 'select', options: ['default', 'sm', 'lg'] },
   },
 }
@@ -37,4 +37,21 @@ export const Large: Story = {
 
 export const Disabled: Story = {
   args: { children: 'Disabled', disabled: true },
+}
+
+export const Destructive: Story = {
+  args: { children: 'Delete', variant: 'destructive' },
+}
+
+export const Loading: Story = {
+  args: { children: 'Saving...', loading: true },
+}
+
+export const AsChildLink: Story = {
+  render: (args) => (
+    <Button {...args} asChild>
+      <a href="#anchor">Go to link</a>
+    </Button>
+  ),
+  args: { variant: 'outline' },
 }
