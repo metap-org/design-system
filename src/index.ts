@@ -1,6 +1,13 @@
 export { Button, buttonVariants, type ButtonProps } from './components/button'
 export { ButtonGroup, type ButtonGroupProps } from './components/button-group'
 export { TreeItem, type TreeItemProps } from './components/tree-item'
+export { BarChart, type BarChartDatum, type BarChartProps } from './components/bar-chart'
+export {
+  FileUpload,
+  type FileUploadProps,
+  type FileRejection,
+  type FileRejectionReason,
+} from './components/file-upload'
 export { IconButton, type IconButtonProps } from './components/icon-button'
 export { Label, type LabelProps } from './components/label'
 export { Textarea, type TextareaProps } from './components/textarea'
