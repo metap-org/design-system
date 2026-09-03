@@ -137,6 +137,17 @@ export {
   type BreadcrumbPageProps,
   type BreadcrumbSeparatorProps,
 } from './components/breadcrumb'
+export {
+  Stepper,
+  StepperGroup,
+  StepperItem,
+  StepperConnector,
+  stepperItemVariants,
+  type StepperProps,
+  type StepperGroupProps,
+  type StepperItemProps,
+  type StepperConnectorProps,
+} from './components/stepper'
 export { Pagination, type PaginationProps } from './components/pagination'
 export { Avatar, type AvatarProps } from './components/avatar'
 export { Chip, chipVariants, type ChipProps } from './components/chip'
