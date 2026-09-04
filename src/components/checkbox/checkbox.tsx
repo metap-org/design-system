@@ -5,6 +5,10 @@ export interface CheckboxProps {
   checked?: boolean
   onCheckedChange?: (checked: boolean) => void
   label?: string
+  /** Accessible name for a checkbox with no visible `label` — e.g. a "select row" checkbox in a
+   * table cell, where a visible label would break the layout. Ignored when `label` is set (the
+   * visible label already provides the accessible name via its `htmlFor`). */
+  'aria-label'?: string
   indeterminate?: boolean
   disabled?: boolean
   id?: string
@@ -12,7 +16,19 @@ export interface CheckboxProps {
 }
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className, checked, onCheckedChange, label, indeterminate, disabled, id }, ref) => {
+  (
+    {
+      className,
+      checked,
+      onCheckedChange,
+      label,
+      'aria-label': ariaLabel,
+      indeterminate,
+      disabled,
+      id,
+    },
+    ref
+  ) => {
     const generatedId = React.useId()
     const inputId = id ?? generatedId
     const innerRef = React.useRef<HTMLInputElement>(null)
@@ -35,6 +51,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             checked={checked}
             onChange={(e) => onCheckedChange?.(e.target.checked)}
             disabled={disabled}
+            aria-label={label ? undefined : ariaLabel}
             className="absolute inset-0 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
           />
           <div
@@ -42,7 +59,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               'pointer-events-none h-4 w-4 rounded border border-input bg-background',
               'flex items-center justify-center transition-colors',
               (checked || indeterminate) && 'border-primary bg-primary',
-              disabled && 'opacity-50',
+              disabled && 'opacity-50'
             )}
           >
             {checked && !indeterminate && (

@@ -43,6 +43,16 @@ describe('Checkbox', () => {
     expect(screen.getByRole('checkbox')).toHaveProperty('indeterminate', true)
   })
 
+  it('accepts an aria-label when there is no visible label', () => {
+    render(<Checkbox aria-label="Select row" />)
+    expect(screen.getByRole('checkbox', { name: 'Select row' })).toBeInTheDocument()
+  })
+
+  it('prefers the visible label over aria-label when both are given', () => {
+    render(<Checkbox label="Accept terms" aria-label="ignored" />)
+    expect(screen.getByRole('checkbox', { name: 'Accept terms' })).toBeInTheDocument()
+  })
+
   it('forwards ref to native input element', () => {
     const ref = React.createRef<HTMLInputElement>()
     render(<Checkbox ref={ref} label="Check" />)
