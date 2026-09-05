@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '../../lib/utils'
 
 export interface SelectOption {
@@ -7,7 +8,17 @@ export interface SelectOption {
   disabled?: boolean
 }
 
-export interface SelectProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'value'> {
+// Radix's `Select.Item` forbids an empty-string `value` (it's reserved internally to mean "no
+// selection"), but several real callers model "All"/"no filter" as an option with `value: ""`
+// (e.g. AnalyticsPage's zone filter, `LowCodeEntitiesAdminPage`'s "no default sort"). Remapped to
+// this sentinel only at the Radix boundary — every prop this component exposes (`value`,
+// `onValueChange`, `options`) still speaks plain `""`, so no caller needs to know this exists.
+const EMPTY_VALUE_SENTINEL = '__metap-select-empty__'
+const toItemValue = (value: string) => (value === '' ? EMPTY_VALUE_SENTINEL : value)
+const fromItemValue = (value: string) => (value === EMPTY_VALUE_SENTINEL ? '' : value)
+
+export interface SelectProps
+  extends Omit<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>, 'onChange' | 'value' | 'defaultValue'> {
   options: SelectOption[]
   value?: string
   onValueChange?: (value: string) => void
@@ -15,117 +26,28 @@ export interface SelectProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
   label?: string
   error?: string
   helperText?: string
-  disabled?: boolean
 }
 
+/**
+ * Built on `@radix-ui/react-select` (2026-09-05, replacing a hand-rolled, non-portaled
+ * implementation — the same architecture every other interactive `@metap/ui` component already
+ * uses: `Dialog`/`DropdownMenu`/`Popover`/`Tabs`/`Tooltip`/`Accordion`). The hand-rolled version's
+ * dropdown was a plain `position: absolute` `<ul>` with no Portal, and — separately, the actual
+ * bug this migration was triggered by — its trigger was a bare `<button>`, so a caller mistakenly
+ * wiring the DOM's generic `onChange` (which exists on every element's props, not just form
+ * controls) instead of this component's real `onValueChange` compiled cleanly but never fired on
+ * click, since a `<button>` never emits a native `change` event
+ * (`metap-demo-waf/data-plane/web` had exactly this typo at 9 call sites — fixed alongside this
+ * migration). `Omit<..., 'onChange'>` above turns that typo into a real compile error for any
+ * future caller instead of a silent no-op.
+ */
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
   (
-    {
-      className,
-      options,
-      value,
-      onValueChange,
-      placeholder = 'Select an option',
-      label,
-      error,
-      helperText,
-      disabled,
-      id,
-      ...props
-    },
-    ref
+    { className, options, value, onValueChange, placeholder = 'Select an option', label, error, helperText, disabled, id, ...props },
+    ref,
   ) => {
     const generatedId = React.useId()
     const triggerId = id ?? generatedId
-    const listboxId = `${triggerId}-listbox`
-    const [open, setOpen] = React.useState(false)
-    const [activeIndex, setActiveIndex] = React.useState(-1)
-    const triggerRef = React.useRef<HTMLButtonElement>(null)
-    const listboxRef = React.useRef<HTMLUListElement>(null)
-
-    React.useImperativeHandle(ref, () => triggerRef.current!)
-
-    const selected = options.find(o => o.value === value)
-
-    const handleOpen = () => {
-      if (disabled) return
-      setOpen(true)
-      const idx = selected ? options.findIndex(o => o.value === selected.value) : -1
-      setActiveIndex(idx)
-    }
-
-    const handleClose = () => {
-      setOpen(false)
-      setActiveIndex(-1)
-    }
-
-    const handleSelect = (option: SelectOption) => {
-      if (option.disabled) return
-      onValueChange?.(option.value)
-      handleClose()
-      triggerRef.current?.focus()
-    }
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-      if (disabled) return
-      if (!open) {
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
-          e.preventDefault()
-          handleOpen()
-        }
-        return
-      }
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        handleClose()
-        triggerRef.current?.focus()
-        return
-      }
-      if (e.key === 'ArrowDown') {
-        e.preventDefault()
-        setActiveIndex(prev => {
-          let next = prev + 1
-          while (next < options.length && options[next].disabled) next++
-          return next < options.length ? next : prev
-        })
-        return
-      }
-      if (e.key === 'ArrowUp') {
-        e.preventDefault()
-        setActiveIndex(prev => {
-          let next = prev - 1
-          while (next >= 0 && options[next].disabled) next--
-          return next >= 0 ? next : prev
-        })
-        return
-      }
-      if (e.key === 'Enter' && activeIndex >= 0) {
-        e.preventDefault()
-        handleSelect(options[activeIndex])
-      }
-    }
-
-    React.useEffect(() => {
-      if (!open) return
-      const handler = (e: MouseEvent) => {
-        if (
-          !triggerRef.current?.contains(e.target as Node) &&
-          !listboxRef.current?.contains(e.target as Node)
-        ) {
-          handleClose()
-        }
-      }
-      document.addEventListener('mousedown', handler)
-      return () => document.removeEventListener('mousedown', handler)
-    }, [open])
-
-    React.useEffect(() => {
-      if (!open || activeIndex < 0 || !listboxRef.current) return
-      const item = listboxRef.current.children[activeIndex] as HTMLElement | undefined
-      if (item && typeof item.scrollIntoView === 'function') {
-        item.scrollIntoView({ block: 'nearest' })
-      }
-    }, [activeIndex, open])
 
     return (
       <div className="flex flex-col gap-1">
@@ -134,89 +56,86 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             {label}
           </label>
         )}
-        <div className="relative">
-          <button
-            ref={triggerRef}
+        {/* No `modal` prop here — unlike `Dialog`, this Radix version's `Select.Content` calls
+            the underlying `hideOthers()`/scroll-lock unconditionally (confirmed by reading
+            `@radix-ui/react-select`'s own source), so there's no way to opt out of it. While
+            open, the rest of the page (including this trigger) gets `pointer-events: none` —
+            harmless for a real user (Radix's own document-level pointerup listener still detects
+            and handles "clicked outside" regardless of that CSS, since it doesn't depend on the
+            target element's own event handlers firing), but it does mean
+            `@testing-library/user-event`'s default strict pointer-events check can't simulate
+            those 2 interactions — see `select.test.tsx`'s own note on the 2 tests that need
+            `pointerEventsCheck: 0`. */}
+        <SelectPrimitive.Root
+          value={value === '' ? EMPTY_VALUE_SENTINEL : value}
+          onValueChange={(next) => onValueChange?.(fromItemValue(next))}
+          disabled={disabled}
+        >
+          <SelectPrimitive.Trigger
+            ref={ref}
             id={triggerId}
-            type="button"
-            role="combobox"
-            aria-expanded={open}
-            aria-haspopup="listbox"
-            aria-controls={open ? listboxId : undefined}
-            aria-activedescendant={activeIndex >= 0 ? `${listboxId}-${activeIndex}` : undefined}
-            disabled={disabled}
-            onClick={() => (open ? handleClose() : handleOpen())}
-            onKeyDown={handleKeyDown}
             {...props}
             className={cn(
               'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-md py-sm text-sm',
               'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
               'disabled:cursor-not-allowed disabled:opacity-50',
-              !selected && 'text-muted-foreground',
+              'data-[placeholder]:text-muted-foreground',
               error && 'border-destructive focus-visible:ring-destructive',
-              className
+              className,
             )}
           >
-            <span className="truncate">{selected ? selected.label : placeholder}</span>
-            <svg
-              className={cn(
-                'h-4 w-4 shrink-0 text-muted-foreground transition-transform',
-                open && 'rotate-180'
-              )}
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
+            <span className="truncate">
+              <SelectPrimitive.Value placeholder={placeholder} />
+            </span>
+            <SelectPrimitive.Icon asChild>
+              <svg
+                className="h-4 w-4 shrink-0 text-muted-foreground transition-transform data-[state=open]:rotate-180"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </SelectPrimitive.Icon>
+          </SelectPrimitive.Trigger>
+          <SelectPrimitive.Portal>
+            <SelectPrimitive.Content
+              className="z-50 max-h-60 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md"
+              position="popper"
+              sideOffset={4}
             >
-              <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-          {open && (
-            <ul
-              ref={listboxRef}
-              id={listboxId}
-              role="listbox"
-              aria-label={label}
-              className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-border bg-popover py-1 text-sm shadow-md"
-            >
-              {options.map((option, index) => (
-                <li
-                  key={option.value}
-                  id={`${listboxId}-${index}`}
-                  role="option"
-                  aria-selected={option.value === value}
-                  aria-disabled={option.disabled}
-                  onMouseDown={e => {
-                    e.preventDefault()
-                    handleSelect(option)
-                  }}
-                  onMouseEnter={() => !option.disabled && setActiveIndex(index)}
-                  className={cn(
-                    'cursor-pointer px-md py-sm text-popover-foreground transition-colors',
-                    index === activeIndex && !option.disabled && 'bg-accent text-accent-foreground',
-                    option.value === value && 'font-medium',
-                    option.disabled && 'cursor-not-allowed opacity-50'
-                  )}
-                >
-                  {option.label}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+              <SelectPrimitive.Viewport className="p-1">
+                {options.map((option) => (
+                  <SelectPrimitive.Item
+                    key={option.value}
+                    value={toItemValue(option.value)}
+                    disabled={option.disabled}
+                    className={cn(
+                      'relative flex cursor-pointer select-none items-center rounded-sm px-md py-sm text-sm outline-none',
+                      'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
+                      'data-[state=checked]:font-medium',
+                      'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
+                    )}
+                  >
+                    <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>
+                  </SelectPrimitive.Item>
+                ))}
+              </SelectPrimitive.Viewport>
+            </SelectPrimitive.Content>
+          </SelectPrimitive.Portal>
+        </SelectPrimitive.Root>
         {error && (
           <p role="alert" className="text-sm text-destructive">
             {error}
           </p>
         )}
-        {!error && helperText && (
-          <p className="text-sm text-muted-foreground">{helperText}</p>
-        )}
+        {!error && helperText && <p className="text-sm text-muted-foreground">{helperText}</p>}
       </div>
     )
-  }
+  },
 )
 Select.displayName = 'Select'

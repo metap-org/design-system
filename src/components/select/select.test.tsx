@@ -29,11 +29,22 @@ describe('Select', () => {
     expect(screen.getByRole('listbox')).toBeInTheDocument()
   })
 
+  // These 2 tests exercise "click something while the listbox is open" — real Radix Select
+  // behavior (confirmed by reading `@radix-ui/react-select`'s own source): while open, it calls
+  // `hideOthers()` unconditionally, which sets `pointer-events: none` on the rest of the page,
+  // including this trigger. That's harmless for a real user (Radix's own document-level
+  // `pointerup` capture listener still detects "clicked outside" and dismisses regardless of the
+  // target's CSS), but `@testing-library/user-event`'s *default* setup refuses to even simulate a
+  // click on an element with computed `pointer-events: none` — `pointerEventsCheck: 0`
+  // (`PointerEventsCheckLevel.Never`) turns that strict check off for just these 2, matching what
+  // actually happens in a browser instead of what jsdom+testing-library would otherwise block.
+  const clickThroughPointerEventsNone = userEvent.setup({ pointerEventsCheck: 0 })
+
   it('closes listbox when clicking trigger again', async () => {
     render(<Select options={OPTIONS} />)
     const trigger = screen.getByRole('combobox')
-    await userEvent.click(trigger)
-    await userEvent.click(trigger)
+    await clickThroughPointerEventsNone.click(trigger)
+    await clickThroughPointerEventsNone.click(trigger)
     expect(screen.queryByRole('listbox')).toBeNull()
   })
 
@@ -44,9 +55,9 @@ describe('Select', () => {
         <button>Outside</button>
       </div>
     )
-    await userEvent.click(screen.getByRole('combobox'))
+    await clickThroughPointerEventsNone.click(screen.getByRole('combobox'))
     expect(screen.getByRole('listbox')).toBeInTheDocument()
-    await userEvent.click(screen.getByText('Outside'))
+    await clickThroughPointerEventsNone.click(screen.getByText('Outside'))
     expect(screen.queryByRole('listbox')).toBeNull()
   })
 
