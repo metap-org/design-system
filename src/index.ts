@@ -195,3 +195,12 @@ export {
   type CommandPaletteItem,
   type CommandPaletteProps,
 } from './components/command-palette'
+export { PageHeader, type PageHeaderProps } from './components/page-header'
+export { EmptyState, type EmptyStateProps } from './components/empty-state'
+export { SectionCard, type SectionCardProps } from './components/section-card'
+export { StatTile, type StatTileProps } from './components/stat-tile'
+export {
+  TimeSeries,
+  type TimeSeriesPoint,
+  type TimeSeriesProps,
+} from './components/time-series'
