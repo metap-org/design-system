@@ -190,3 +190,8 @@ export {
   type DateRange,
   type DateRangePickerProps,
 } from './components/date-range-picker'
+export {
+  CommandPalette,
+  type CommandPaletteItem,
+  type CommandPaletteProps,
+} from './components/command-palette'
