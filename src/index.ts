@@ -204,3 +204,14 @@ export {
   type TimeSeriesPoint,
   type TimeSeriesProps,
 } from './components/time-series'
+export {
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarItem,
+  type SidebarProps,
+  type SidebarGroupProps,
+  type SidebarItemProps,
+} from './components/sidebar'
