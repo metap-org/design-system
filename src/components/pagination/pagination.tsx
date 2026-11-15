@@ -29,10 +29,13 @@ export interface PaginationProps extends React.ComponentPropsWithoutRef<'nav'> {
   onPageChange: (page: number) => void
   /** Page numbers shown on each side of the current page. Default 1. */
   siblingCount?: number
+  /** Visible text of the previous/next buttons. Defaults to Vietnamese (this system's default locale). */
+  previousLabel?: string
+  nextLabel?: string
 }
 
 export const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
-  ({ className, page, totalPages, onPageChange, siblingCount = 1, ...props }, ref) => {
+  ({ className, page, totalPages, onPageChange, siblingCount = 1, previousLabel = 'Trước', nextLabel = 'Sau', ...props }, ref) => {
     const pages = getPageList(page, totalPages, siblingCount)
 
     const goTo = (target: number) => {
@@ -48,7 +51,7 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
           onClick={() => goTo(page - 1)}
           className="inline-flex h-9 items-center rounded-md px-sm text-sm transition-colors hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
         >
-          Trước
+          {previousLabel}
         </button>
         {pages.map((p, i) =>
           p === 'ellipsis' ? (
@@ -77,7 +80,7 @@ export const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
           onClick={() => goTo(page + 1)}
           className="inline-flex h-9 items-center rounded-md px-sm text-sm transition-colors hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50"
         >
-          Sau
+          {nextLabel}
         </button>
       </nav>
     )
