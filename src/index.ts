@@ -201,6 +201,13 @@ export { SectionCard, type SectionCardProps } from './components/section-card'
 export { StatTile, type StatTileProps } from './components/stat-tile'
 export { QrCode, type QrCodeProps } from './components/qr-code'
 export {
+  SettingsSection,
+  SettingsRow,
+  type SettingsSectionProps,
+  type SettingsRowProps,
+} from './components/settings-section'
+export { StickyActionBar, type StickyActionBarProps } from './components/sticky-action-bar'
+export {
   TimeSeries,
   type TimeSeriesPoint,
   type TimeSeriesProps,
