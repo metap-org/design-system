@@ -199,6 +199,7 @@ export { PageHeader, type PageHeaderProps } from './components/page-header'
 export { EmptyState, type EmptyStateProps } from './components/empty-state'
 export { SectionCard, type SectionCardProps } from './components/section-card'
 export { StatTile, type StatTileProps } from './components/stat-tile'
+export { QrCode, type QrCodeProps } from './components/qr-code'
 export {
   TimeSeries,
   type TimeSeriesPoint,
