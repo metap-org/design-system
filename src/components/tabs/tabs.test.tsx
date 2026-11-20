@@ -48,4 +48,18 @@ describe('Tabs', () => {
     await userEvent.keyboard('{ArrowRight}')
     expect(screen.getByRole('tab', { name: 'Mật khẩu' })).toHaveFocus()
   })
+
+  it('stacks the list as a side menu when vertical', () => {
+    render(
+      <Tabs defaultValue="a" orientation="vertical">
+        <TabsList>
+          <TabsTrigger value="a">A</TabsTrigger>
+          <TabsTrigger value="b">B</TabsTrigger>
+        </TabsList>
+        <TabsContent value="a">Nội dung A</TabsContent>
+      </Tabs>
+    )
+    expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical')
+    expect(screen.getByRole('tablist').className).toContain('data-[orientation=vertical]:flex-col')
+  })
 })
