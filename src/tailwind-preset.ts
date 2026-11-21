@@ -86,6 +86,11 @@ const preset = {
           to: { opacity: '0', scale: '0.96', translate: '0 -2px' },
         },
         'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
+        shimmer: { to: { transform: 'translateX(100%)' } },
+        'toast-in': {
+          from: { opacity: '0', translate: '0 8px', scale: '0.98' },
+          to: { opacity: '1', translate: '0 0', scale: '1' },
+        },
         'fade-out': { from: { opacity: '1' }, to: { opacity: '0' } },
         'dialog-in': {
           from: { opacity: '0', scale: '0.96' },
@@ -108,6 +113,8 @@ const preset = {
         'pop-in': 'pop-in 160ms cubic-bezier(0.16, 1, 0.3, 1)',
         'pop-out': 'pop-out 110ms ease-in forwards',
         'fade-in': 'fade-in 160ms ease-out',
+        shimmer: 'shimmer 1.6s ease-in-out infinite',
+        'toast-in': 'toast-in 220ms cubic-bezier(0.16, 1, 0.3, 1)',
         'fade-out': 'fade-out 120ms ease-in forwards',
         'dialog-in': 'dialog-in 200ms cubic-bezier(0.16, 1, 0.3, 1)',
         'dialog-out': 'dialog-out 140ms ease-in forwards',

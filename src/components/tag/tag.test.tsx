@@ -16,27 +16,27 @@ describe('Tag', () => {
 
   it('applies blue color', () => {
     const { container } = render(<Tag label="Món chính" color="blue" />)
-    expect(container.firstChild).toHaveClass('bg-blue-100')
+    expect(container.firstChild).toHaveClass('bg-info/10')
   })
 
   it('applies green color', () => {
     const { container } = render(<Tag label="Rau củ" color="green" />)
-    expect(container.firstChild).toHaveClass('bg-green-100')
+    expect(container.firstChild).toHaveClass('bg-success/10')
   })
 
   it('applies yellow color', () => {
     const { container } = render(<Tag label="Khuyến mãi" color="yellow" />)
-    expect(container.firstChild).toHaveClass('bg-yellow-100')
+    expect(container.firstChild).toHaveClass('bg-warning/15')
   })
 
   it('applies red color', () => {
     const { container } = render(<Tag label="Hết hàng" color="red" />)
-    expect(container.firstChild).toHaveClass('bg-red-100')
+    expect(container.firstChild).toHaveClass('bg-destructive/10')
   })
 
   it('applies purple color', () => {
     const { container } = render(<Tag label="VIP" color="purple" />)
-    expect(container.firstChild).toHaveClass('bg-purple-100')
+    expect(container.firstChild).toHaveClass('bg-chart-2/10')
   })
 
   it('merges custom className', () => {
