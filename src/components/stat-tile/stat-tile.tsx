@@ -25,7 +25,7 @@ export const StatTile = React.forwardRef<HTMLDivElement, StatTileProps>(
         : tone === 'warning'
           ? 'text-amber-600 dark:text-amber-500'
           : tone === 'success'
-            ? 'text-emerald-600 dark:text-emerald-500'
+            ? 'text-success'
             : ''
     return (
       <Card ref={ref} className={className} {...props}>
@@ -36,9 +36,7 @@ export const StatTile = React.forwardRef<HTMLDivElement, StatTileProps>(
           {loading ? (
             <Skeleton className="mt-2 h-8 w-16" />
           ) : (
-            <div className={cn('mt-1 text-2xl font-semibold tabular-nums', toneClass)}>
-              {value}
-            </div>
+            <div className={cn('mt-1 text-2xl font-semibold tabular-nums', toneClass)}>{value}</div>
           )}
           {hint ? <div className="mt-1 text-xs text-muted-foreground">{hint}</div> : null}
         </CardContent>

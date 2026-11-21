@@ -4,6 +4,10 @@
 
 /* AUTO-GENERATED — run `pnpm tokens:generate` to update */
 @layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -25,6 +29,25 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
+    --success: 161 94% 30%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 222.2 84% 4.9%;
+    --info: 217 91% 50%;
+    --info-foreground: 0 0% 100%;
+    --sidebar: 210 40% 98.8%;
+    --sidebar-foreground: 215.4 16.3% 46.9%;
+    --sidebar-accent: 210 40% 96.1%;
+    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
+    --sidebar-primary: 222.2 47.4% 11.2%;
+    --sidebar-border: 214.3 31.8% 91.4%;
+    --chart-1: 222.2 47.4% 11.2%;
+    --chart-2: 217 91% 50%;
+    --chart-3: 161 94% 30%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 262 83% 58%;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   }
 
   .dark {
@@ -48,5 +71,24 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
     --radius: 0.5rem;
+    --success: 160 84% 39%;
+    --success-foreground: 160 84% 5%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 222.2 84% 4.9%;
+    --info: 213 94% 68%;
+    --info-foreground: 222.2 84% 4.9%;
+    --sidebar: 222.2 84% 6.5%;
+    --sidebar-foreground: 215 20.2% 65.1%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-primary: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --chart-1: 210 40% 98%;
+    --chart-2: 213 94% 68%;
+    --chart-3: 160 84% 39%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 262 83% 70%;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   }
 }

@@ -38,7 +38,7 @@ describe('BarChart', () => {
     expect(rect).toHaveAttribute('height', '0')
   })
 
-  it('uses the per-bar color when provided, default primary otherwise', () => {
+  it('uses the per-bar color when provided, default chart color otherwise', () => {
     const { container } = render(
       <BarChart
         data={[
@@ -49,7 +49,7 @@ describe('BarChart', () => {
     )
     const rects = container.querySelectorAll('rect')
     expect(rects[0]).toHaveAttribute('fill', 'hsl(var(--destructive))')
-    expect(rects[1]).toHaveAttribute('fill', 'hsl(var(--primary))')
+    expect(rects[1]).toHaveAttribute('fill', 'hsl(var(--chart-1))')
   })
 
   it('merges custom className onto the svg', () => {

@@ -26,7 +26,7 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
         ref={ref}
         data-collapsed={collapsed || undefined}
         className={cn(
-          'flex h-full shrink-0 flex-col border-r border-border bg-muted/30 transition-[width] duration-200',
+          'flex h-full shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width] duration-200',
           collapsed ? 'w-14' : 'w-60',
           className
         )}
@@ -42,7 +42,7 @@ export const SidebarHeader = React.forwardRef<HTMLDivElement, React.HTMLAttribut
     <div
       ref={ref}
       className={cn(
-        'flex h-12 shrink-0 items-center gap-2 border-b border-border px-xs',
+        'flex h-12 shrink-0 items-center gap-2 border-b border-sidebar-border px-xs',
         className
       )}
       {...props}
@@ -66,7 +66,7 @@ export const SidebarFooter = React.forwardRef<HTMLDivElement, React.HTMLAttribut
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('flex shrink-0 flex-col gap-1 border-t border-border p-xs', className)}
+      className={cn('flex shrink-0 flex-col gap-1 border-t border-sidebar-border p-xs', className)}
       {...props}
     />
   )
@@ -91,9 +91,9 @@ export const SidebarGroup = React.forwardRef<HTMLDivElement, SidebarGroupProps>(
       >
         {label ? (
           collapsed ? (
-            <div aria-hidden className="mx-2 my-1 border-t border-border" />
+            <div aria-hidden className="mx-2 my-1 border-t border-sidebar-border" />
           ) : (
-            <div className="px-2 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <div className="px-2 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-sidebar-foreground/70">
               {label}
             </div>
           )
@@ -134,11 +134,13 @@ export const SidebarItem = React.forwardRef<HTMLElement, SidebarItemProps>(
         title={collapsed ? label : undefined}
         data-active={active || undefined}
         className={cn(
-          'flex h-8 w-full items-center gap-2 rounded-md px-2 text-sm transition-colors',
+          'relative flex h-8 w-full items-center gap-2 rounded-md px-2 text-sm transition-colors',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
           active
-            ? 'bg-accent font-medium text-accent-foreground'
-            : 'text-muted-foreground hover:bg-accent/60 hover:text-foreground',
+            ? // The bar on the left edge is the one thing that says "you are here" even when the
+              // rail is collapsed to icons, where the label is gone.
+              'bg-sidebar-accent font-medium text-sidebar-accent-foreground before:absolute before:inset-y-1.5 before:left-0 before:w-0.5 before:rounded-full before:bg-sidebar-primary'
+            : 'text-sidebar-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground',
           collapsed && 'justify-center px-0',
           className
         )}
