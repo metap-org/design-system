@@ -11,7 +11,7 @@ describe('Card', () => {
 
   it('applies base card classes', () => {
     const { container } = render(<Card>content</Card>)
-    expect(container.firstChild).toHaveClass('rounded-lg')
+    expect(container.firstChild).toHaveClass('rounded-xl')
     expect(container.firstChild).toHaveClass('border-border')
   })
 

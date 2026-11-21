@@ -15,17 +15,14 @@ export interface ToastEntry {
 const listeners = new Set<(t: ToastEntry) => void>()
 let _counter = 0
 
-export function toast(
-  message: string,
-  opts?: { variant?: ToastVariant; duration?: number }
-): void {
+export function toast(message: string, opts?: { variant?: ToastVariant; duration?: number }): void {
   const entry: ToastEntry = {
     id: String(++_counter),
     message,
     variant: opts?.variant ?? 'default',
     duration: opts?.duration ?? 4000,
   }
-  listeners.forEach(l => l(entry))
+  listeners.forEach((l) => l(entry))
 }
 
 interface ToastItemProps extends ToastEntry {
@@ -45,11 +42,10 @@ function ToastItem({ message, variant, duration, onDismiss }: ToastItemProps) {
       aria-live="assertive"
       aria-atomic="true"
       className={cn(
-        'flex items-start justify-between gap-md rounded-md border px-md py-sm shadow-lg',
+        'flex animate-toast-in items-start justify-between gap-md rounded-lg border px-md py-sm shadow-lg',
         'min-w-64 max-w-sm text-sm',
         variant === 'default' && 'border-border bg-background text-foreground',
-        variant === 'destructive' &&
-          'border-destructive bg-destructive text-destructive-foreground'
+        variant === 'destructive' && 'border-destructive bg-destructive text-destructive-foreground'
       )}
     >
       <span className="flex-1">{message}</span>
@@ -59,7 +55,7 @@ function ToastItem({ message, variant, duration, onDismiss }: ToastItemProps) {
         aria-label="Dismiss notification"
         className={cn(
           'shrink-0 opacity-70 hover:opacity-100',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1'
+          'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30 focus-visible:ring-offset-1'
         )}
       >
         <svg
@@ -82,7 +78,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = React.useState<ToastEntry[]>([])
 
   React.useEffect(() => {
-    const handler = (t: ToastEntry) => setToasts(prev => [...prev, t])
+    const handler = (t: ToastEntry) => setToasts((prev) => [...prev, t])
     listeners.add(handler)
     return () => {
       listeners.delete(handler)
@@ -90,7 +86,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const dismiss = React.useCallback((id: string) => {
-    setToasts(prev => prev.filter(t => t.id !== id))
+    setToasts((prev) => prev.filter((t) => t.id !== id))
   }, [])
 
   return (
@@ -102,7 +98,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             aria-label="Notifications"
             className="fixed bottom-md right-md z-50 flex flex-col gap-sm"
           >
-            {toasts.map(t => (
+            {toasts.map((t) => (
               <ToastItem key={t.id} {...t} onDismiss={() => dismiss(t.id)} />
             ))}
           </div>,

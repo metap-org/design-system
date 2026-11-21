@@ -121,7 +121,7 @@ export const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePicker
             onClick={() => setOpen(prev => !prev)}
             className={cn(
               'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-md py-sm text-sm',
-              'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+              'transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
               'disabled:cursor-not-allowed disabled:opacity-50',
               !formatted && 'text-muted-foreground',
               error && 'border-destructive focus-visible:ring-destructive',
@@ -172,7 +172,7 @@ export const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePicker
                   onChange={handleTimeChange}
                   className={cn(
                     'flex-1 rounded-md border border-input bg-background px-sm py-1 text-sm',
-                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+                    'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30 focus-visible:ring-offset-1',
                     'disabled:cursor-not-allowed disabled:opacity-50'
                   )}
                 />

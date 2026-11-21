@@ -17,8 +17,8 @@ export const SheetOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      'fixed inset-0 z-50 bg-foreground/50 transition-opacity duration-200',
-      'data-[state=closed]:opacity-0 data-[state=open]:opacity-100',
+      'fixed inset-0 z-50 bg-foreground/50 backdrop-blur-[2px]',
+      'data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
       className
     )}
     {...props}
@@ -26,25 +26,23 @@ export const SheetOverlay = React.forwardRef<
 ))
 SheetOverlay.displayName = DialogPrimitive.Overlay.displayName
 
-const sheetContentVariants = cva(
-  'fixed z-50 flex flex-col gap-md bg-background p-lg shadow-lg transition-transform duration-200',
-  {
-    variants: {
-      side: {
-        right:
-          'inset-y-0 right-0 h-full w-full max-w-sm border-l border-border data-[state=closed]:translate-x-full data-[state=open]:translate-x-0',
-        left: 'inset-y-0 left-0 h-full w-full max-w-sm border-r border-border data-[state=closed]:-translate-x-full data-[state=open]:translate-x-0',
-        top: 'inset-x-0 top-0 border-b border-border data-[state=closed]:-translate-y-full data-[state=open]:translate-y-0',
-        bottom:
-          'inset-x-0 bottom-0 border-t border-border data-[state=closed]:translate-y-full data-[state=open]:translate-y-0',
-      },
+const sheetContentVariants = cva('fixed z-50 flex flex-col gap-md bg-background p-lg shadow-lg', {
+  variants: {
+    side: {
+      right:
+        'inset-y-0 right-0 h-full w-full max-w-sm border-l border-border data-[state=open]:animate-sheet-right-in data-[state=closed]:animate-sheet-right-out',
+      left: 'inset-y-0 left-0 h-full w-full max-w-sm border-r border-border data-[state=open]:animate-sheet-left-in data-[state=closed]:animate-sheet-left-out',
+      top: 'inset-x-0 top-0 border-b border-border data-[state=open]:animate-sheet-top-in data-[state=closed]:animate-sheet-top-out',
+      bottom:
+        'inset-x-0 bottom-0 border-t border-border data-[state=open]:animate-sheet-bottom-in data-[state=closed]:animate-sheet-bottom-out',
     },
-    defaultVariants: { side: 'right' },
-  }
-)
+  },
+  defaultVariants: { side: 'right' },
+})
 
 export interface SheetContentProps
-  extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
+  extends
+    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
     VariantProps<typeof sheetContentVariants> {}
 
 export const SheetContent = React.forwardRef<
@@ -60,10 +58,17 @@ export const SheetContent = React.forwardRef<
     >
       {children}
       <DialogPrimitive.Close
-        className="absolute right-md top-md rounded-md opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="absolute right-md top-md rounded-md opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30"
         aria-label="Đóng"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
           <path d="M18 6 6 18M6 6l12 12" />
         </svg>
       </DialogPrimitive.Close>
@@ -78,7 +83,10 @@ export const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDi
 SheetHeader.displayName = 'SheetHeader'
 
 export const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('mt-auto flex flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)} {...props} />
+  <div
+    className={cn('mt-auto flex flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)}
+    {...props}
+  />
 )
 SheetFooter.displayName = 'SheetFooter'
 

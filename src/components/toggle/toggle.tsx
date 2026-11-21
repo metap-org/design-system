@@ -1,7 +1,10 @@
 import * as React from 'react'
 import { cn } from '../../lib/utils'
 
-export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
+export interface ToggleProps extends Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  'onClick'
+> {
   checked: boolean
   onCheckedChange: (checked: boolean) => void
   label?: string
@@ -25,7 +28,7 @@ export const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
           onClick={() => onCheckedChange(!checked)}
           className={cn(
             'relative inline-flex shrink-0 cursor-pointer rounded-full border-2 border-transparent',
-            'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+            'transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
             'disabled:cursor-not-allowed disabled:opacity-50',
             size === 'sm' ? 'h-5 w-9' : 'h-6 w-11',
             checked ? 'bg-primary' : 'bg-input',
@@ -35,11 +38,15 @@ export const Toggle = React.forwardRef<HTMLButtonElement, ToggleProps>(
         >
           <span
             className={cn(
-              'pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform',
+              'pointer-events-none block rounded-full bg-background shadow-sm ring-0 transition-transform',
               size === 'sm' ? 'h-4 w-4' : 'h-5 w-5',
               size === 'sm'
-                ? checked ? 'translate-x-4' : 'translate-x-0'
-                : checked ? 'translate-x-5' : 'translate-x-0'
+                ? checked
+                  ? 'translate-x-4'
+                  : 'translate-x-0'
+                : checked
+                  ? 'translate-x-5'
+                  : 'translate-x-0'
             )}
           />
         </button>

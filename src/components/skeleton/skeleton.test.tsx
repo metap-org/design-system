@@ -4,9 +4,9 @@ import { describe, it, expect } from 'vitest'
 import { Skeleton } from './skeleton'
 
 describe('Skeleton', () => {
-  it('applies pulse animation and base classes', () => {
+  it('applies the shimmer sweep and base classes', () => {
     const { container } = render(<Skeleton />)
-    expect(container.firstChild).toHaveClass('animate-pulse')
+    expect(container.firstChild).toHaveClass('after:animate-shimmer')
     expect(container.firstChild).toHaveClass('bg-muted')
   })
 
@@ -24,7 +24,7 @@ describe('Skeleton', () => {
   it('merges custom className without dropping base classes', () => {
     const { container } = render(<Skeleton className="custom-class" />)
     expect(container.firstChild).toHaveClass('custom-class')
-    expect(container.firstChild).toHaveClass('animate-pulse')
+    expect(container.firstChild).toHaveClass('after:animate-shimmer')
   })
 
   it('forwards ref', () => {

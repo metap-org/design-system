@@ -73,16 +73,21 @@ export function TimeSeries({
       <text x={4} y={padding.top + 8} className="text-[10px]" fill="hsl(var(--muted-foreground))">
         {max}
       </text>
-      <path d={area} fill="hsl(var(--primary))" opacity={0.12} />
-      <path d={line} fill="none" stroke="hsl(var(--primary))" strokeWidth={2} />
+      <path d={area} fill="hsl(var(--chart-1))" opacity={0.12} />
+      <path d={line} fill="none" stroke="hsl(var(--chart-1))" strokeWidth={2} />
       {coords.map((c) => (
-        <circle key={c.label} cx={c.x} cy={c.y} r={2.5} fill="hsl(var(--primary))">
+        <circle key={c.label} cx={c.x} cy={c.y} r={2.5} fill="hsl(var(--chart-1))">
           <title>{`${c.label}: ${c.value}`}</title>
         </circle>
       ))}
       {/* Only the ends are labelled — a dense axis on a 640-wide viewBox that scales down to a
           phone becomes unreadable overlap, and the per-point tooltip already carries the detail. */}
-      <text x={padding.left} y={height - 6} className="text-[10px]" fill="hsl(var(--muted-foreground))">
+      <text
+        x={padding.left}
+        y={height - 6}
+        className="text-[10px]"
+        fill="hsl(var(--muted-foreground))"
+      >
         {points[0]?.label}
       </text>
       <text

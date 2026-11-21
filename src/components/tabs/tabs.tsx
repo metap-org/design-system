@@ -16,7 +16,7 @@ export const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground',
+      'inline-flex h-10 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground',
       'data-[orientation=vertical]:h-auto data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch data-[orientation=vertical]:justify-start data-[orientation=vertical]:gap-0.5 data-[orientation=vertical]:bg-transparent data-[orientation=vertical]:p-0',
       className
     )}
@@ -32,8 +32,8 @@ export const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'inline-flex items-center justify-center whitespace-nowrap rounded-sm px-sm py-1.5 text-sm font-medium transition-colors',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+      'inline-flex items-center justify-center whitespace-nowrap rounded-md px-sm py-1.5 text-sm font-medium transition-[color,background-color,box-shadow]',
+      'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
       'disabled:pointer-events-none disabled:opacity-50',
       'data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm',
       'data-[orientation=vertical]:justify-start data-[orientation=vertical]:rounded-md data-[orientation=vertical]:px-3 data-[orientation=vertical]:py-2 data-[orientation=vertical]:hover:bg-muted data-[orientation=vertical]:hover:text-foreground',
@@ -52,7 +52,7 @@ export const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      'mt-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[orientation=vertical]:mt-0 data-[orientation=vertical]:min-w-0 data-[orientation=vertical]:flex-1',
+      'mt-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30 data-[orientation=vertical]:mt-0 data-[orientation=vertical]:min-w-0 data-[orientation=vertical]:flex-1',
       className
     )}
     {...props}

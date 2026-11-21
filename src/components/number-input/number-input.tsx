@@ -78,7 +78,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             className={cn(
               'flex h-10 w-full rounded-md border border-input bg-background px-md py-sm pr-9 text-sm text-foreground',
               'placeholder:text-muted-foreground',
-              'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+              'transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
               'disabled:cursor-not-allowed disabled:opacity-50',
               '[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none',
               error && 'border-destructive focus-visible:ring-destructive',

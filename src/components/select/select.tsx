@@ -17,8 +17,10 @@ const EMPTY_VALUE_SENTINEL = '__metap-select-empty__'
 const toItemValue = (value: string) => (value === '' ? EMPTY_VALUE_SENTINEL : value)
 const fromItemValue = (value: string) => (value === EMPTY_VALUE_SENTINEL ? '' : value)
 
-export interface SelectProps
-  extends Omit<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>, 'onChange' | 'value' | 'defaultValue'> {
+export interface SelectProps extends Omit<
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>,
+  'onChange' | 'value' | 'defaultValue'
+> {
   options: SelectOption[]
   value?: string
   onValueChange?: (value: string) => void
@@ -43,8 +45,20 @@ export interface SelectProps
  */
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
   (
-    { className, options, value, onValueChange, placeholder = 'Select an option', label, error, helperText, disabled, id, ...props },
-    ref,
+    {
+      className,
+      options,
+      value,
+      onValueChange,
+      placeholder = 'Select an option',
+      label,
+      error,
+      helperText,
+      disabled,
+      id,
+      ...props
+    },
+    ref
   ) => {
     const generatedId = React.useId()
     const triggerId = id ?? generatedId
@@ -77,11 +91,13 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             {...props}
             className={cn(
               'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-md py-sm text-sm',
-              'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+              'shadow-xs transition-[border-color,box-shadow] duration-150 hover:border-muted-foreground/40',
+              'focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
               'disabled:cursor-not-allowed disabled:opacity-50',
               'data-[placeholder]:text-muted-foreground',
-              error && 'border-destructive focus-visible:ring-destructive',
-              className,
+              error &&
+                'border-destructive focus-visible:border-destructive focus-visible:ring-destructive/30',
+              className
             )}
           >
             <span className="truncate">
@@ -104,7 +120,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           </SelectPrimitive.Trigger>
           <SelectPrimitive.Portal>
             <SelectPrimitive.Content
-              className="z-50 max-h-60 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md"
+              className="z-50 max-h-60 min-w-[var(--radix-select-trigger-width)] origin-[var(--radix-select-content-transform-origin)] overflow-hidden rounded-lg border border-border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-pop-in data-[state=closed]:animate-pop-out"
               position="popper"
               sideOffset={4}
             >
@@ -118,7 +134,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                       'relative flex cursor-pointer select-none items-center rounded-sm px-md py-sm text-sm outline-none',
                       'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
                       'data-[state=checked]:font-medium',
-                      'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
+                      'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50'
                     )}
                   >
                     <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>
@@ -136,6 +152,6 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         {!error && helperText && <p className="text-sm text-muted-foreground">{helperText}</p>}
       </div>
     )
-  },
+  }
 )
 Select.displayName = 'Select'

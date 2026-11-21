@@ -12,11 +12,11 @@ export const tagVariants = cva(
     variants: {
       color: {
         gray: 'border-transparent bg-muted text-muted-foreground',
-        blue: 'border-transparent bg-blue-100 text-blue-800',
-        green: 'border-transparent bg-green-100 text-green-800',
-        yellow: 'border-transparent bg-yellow-100 text-yellow-800',
-        red: 'border-transparent bg-red-100 text-red-800',
-        purple: 'border-transparent bg-purple-100 text-purple-800',
+        blue: 'border-info/20 bg-info/10 text-info',
+        green: 'border-success/20 bg-success/10 text-success',
+        yellow: 'border-warning/40 bg-warning/15 text-warning-foreground',
+        red: 'border-destructive/20 bg-destructive/10 text-destructive',
+        purple: 'border-chart-2/20 bg-chart-2/10 text-chart-2',
       },
     },
     defaultVariants: { color: 'gray' },
@@ -24,8 +24,7 @@ export const tagVariants = cva(
 )
 
 export interface TagProps
-  extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'>,
-    VariantProps<typeof tagVariants> {
+  extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'>, VariantProps<typeof tagVariants> {
   label: string
 }
 

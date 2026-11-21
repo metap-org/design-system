@@ -101,7 +101,7 @@ export const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePick
             onClick={() => setOpen(prev => !prev)}
             className={cn(
               'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-md py-sm text-sm',
-              'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+              'transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
               'disabled:cursor-not-allowed disabled:opacity-50',
               !formatted && 'text-muted-foreground',
               error && 'border-destructive focus-visible:ring-destructive',
@@ -170,13 +170,13 @@ const rangePickerClassNames = {
   button_previous: cn(
     'inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-background text-foreground',
     'hover:bg-accent hover:text-accent-foreground',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+    'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30 focus-visible:ring-offset-1',
     'disabled:opacity-50 disabled:cursor-not-allowed'
   ),
   button_next: cn(
     'inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-background text-foreground',
     'hover:bg-accent hover:text-accent-foreground',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+    'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30 focus-visible:ring-offset-1',
     'disabled:opacity-50 disabled:cursor-not-allowed'
   ),
   month_grid: 'w-full border-collapse',
@@ -187,7 +187,7 @@ const rangePickerClassNames = {
   day_button: cn(
     'inline-flex h-9 w-9 items-center justify-center rounded-md text-sm text-foreground',
     'hover:bg-accent hover:text-accent-foreground',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+    'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30 focus-visible:ring-offset-1',
     'disabled:opacity-50 disabled:cursor-not-allowed',
     'transition-colors'
   ),

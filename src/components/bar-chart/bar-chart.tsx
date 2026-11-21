@@ -12,7 +12,7 @@ import { cn } from '../../lib/utils'
  * design tokens (`hsl(var(--...)))`, the same CSS-variable convention every other component here
  * uses) so it inherits the host app's theme (including dark mode) for free rather than shipping a
  * second, disconnected palette. A single un-colored series draws every bar in one hue
- * (`--primary`) — per-bar `color` is for when category identity itself carries meaning beyond the
+ * (`--chart-1`) — per-bar `color` is for when category identity itself carries meaning beyond the
  * axis label (e.g. priority's red/orange/yellow/gray), not decoration.
  *
  * Moved here from `../platform-ui/src/charts/BarChart.tsx` (2026-09-01) — a pure UI atom with no
@@ -70,7 +70,7 @@ export const BarChart = React.forwardRef<SVGSVGElement, BarChartProps>(
           const barHeight =
             maxValue > 0 ? Math.max((d.value / maxValue) * innerH, d.value > 0 ? 2 : 0) : 0
           const y = baselineY - barHeight
-          const color = d.color ?? 'hsl(var(--primary))'
+          const color = d.color ?? 'hsl(var(--chart-1))'
           return (
             <g key={d.label}>
               <title>{`${d.label}: ${d.value}`}</title>
