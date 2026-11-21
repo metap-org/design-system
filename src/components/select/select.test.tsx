@@ -158,4 +158,57 @@ describe('Select', () => {
     render(<Select options={OPTIONS} className="extra-class" />)
     expect(screen.getByRole('combobox')).toHaveClass('extra-class')
   })
+
+  describe('lazy', () => {
+    it('looks and reads like the real trigger before any interaction', () => {
+      render(<Select lazy label="Fruit" options={OPTIONS} value="banana" />)
+      const trigger = screen.getByRole('combobox', { name: 'Fruit' })
+      expect(trigger).toHaveTextContent('Banana')
+      expect(trigger).toHaveAttribute('aria-expanded', 'false')
+      expect(screen.queryByRole('listbox')).toBeNull()
+    })
+
+    it('shows the placeholder when nothing is selected', () => {
+      render(<Select lazy options={OPTIONS} placeholder="Pick a fruit" />)
+      const trigger = screen.getByRole('combobox')
+      expect(trigger).toHaveTextContent('Pick a fruit')
+      expect(trigger).toHaveAttribute('data-placeholder')
+    })
+
+    it('becomes the real Select, already open, on the first click', async () => {
+      render(<Select lazy options={OPTIONS} />)
+      await userEvent.click(screen.getByRole('combobox'))
+      expect(screen.getByRole('listbox')).toBeInTheDocument()
+    })
+
+    it('opens with the keyboard', async () => {
+      render(<Select lazy options={OPTIONS} />)
+      screen.getByRole('combobox').focus()
+      await userEvent.keyboard('{ArrowDown}')
+      expect(screen.getByRole('listbox')).toBeInTheDocument()
+    })
+
+    it('calls onValueChange when an option is picked', async () => {
+      const onValueChange = vi.fn()
+      render(<Select lazy options={OPTIONS} onValueChange={onValueChange} />)
+      await userEvent.click(screen.getByRole('combobox'))
+      await userEvent.click(screen.getByRole('option', { name: 'Banana' }))
+      expect(onValueChange).toHaveBeenCalledWith('banana')
+      expect(screen.queryByRole('listbox')).toBeNull()
+    })
+
+    it('does not open when disabled', async () => {
+      render(<Select lazy disabled options={OPTIONS} />)
+      const trigger = screen.getByRole('combobox')
+      expect(trigger).toBeDisabled()
+      await userEvent.click(trigger)
+      expect(screen.queryByRole('listbox')).toBeNull()
+    })
+
+    it('forwards ref and trigger props to the static trigger', () => {
+      const ref = React.createRef<HTMLButtonElement>()
+      render(<Select lazy ref={ref} aria-label="Preset" options={OPTIONS} />)
+      expect(ref.current).toBe(screen.getByRole('combobox', { name: 'Preset' }))
+    })
+  })
 })
