@@ -134,8 +134,8 @@ export const SidebarItem = React.forwardRef<HTMLElement, SidebarItemProps>(
         title={collapsed ? label : undefined}
         data-active={active || undefined}
         className={cn(
-          'relative flex h-8 w-full items-center gap-2 rounded-md px-2 text-sm transition-colors',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+          'relative flex h-8 w-full items-center gap-2 rounded-lg px-2 text-sm transition-colors duration-150',
+          'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
           active
             ? // The bar on the left edge is the one thing that says "you are here" even when the
               // rail is collapsed to icons, where the label is gone.

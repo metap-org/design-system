@@ -18,8 +18,8 @@ export const DropdownMenuContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        'z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md',
-        'data-[state=closed]:opacity-0 data-[state=open]:opacity-100 transition-opacity',
+        'z-50 min-w-[8rem] origin-[var(--radix-dropdown-menu-content-transform-origin)] overflow-hidden rounded-lg border border-border bg-popover p-1 text-popover-foreground shadow-md',
+        'data-[state=open]:animate-pop-in data-[state=closed]:animate-pop-out',
         className
       )}
       {...props}
@@ -35,7 +35,7 @@ export const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm px-sm py-1.5 text-sm outline-none transition-colors',
+      'relative flex cursor-default select-none items-center rounded-md px-sm py-1.5 text-sm outline-none transition-colors',
       'focus:bg-accent focus:text-accent-foreground',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       inset && 'pl-8',
@@ -54,7 +54,7 @@ export const DropdownMenuCheckboxItem = React.forwardRef<
     ref={ref}
     checked={checked}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-sm text-sm outline-none transition-colors',
+      'relative flex cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-sm text-sm outline-none transition-colors',
       'focus:bg-accent focus:text-accent-foreground',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className
@@ -63,7 +63,14 @@ export const DropdownMenuCheckboxItem = React.forwardRef<
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+        >
           <path d="M20 6 9 17l-5-5" />
         </svg>
       </DropdownMenuPrimitive.ItemIndicator>
@@ -80,7 +87,7 @@ export const DropdownMenuRadioItem = React.forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-sm text-sm outline-none transition-colors',
+      'relative flex cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-sm text-sm outline-none transition-colors',
       'focus:bg-accent focus:text-accent-foreground',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className

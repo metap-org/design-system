@@ -59,7 +59,7 @@ function ToastItem({ message, variant, duration, onDismiss }: ToastItemProps) {
         aria-label="Dismiss notification"
         className={cn(
           'shrink-0 opacity-70 hover:opacity-100',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1'
+          'focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30 focus-visible:ring-offset-1'
         )}
       >
         <svg

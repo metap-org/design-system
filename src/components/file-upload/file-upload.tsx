@@ -159,7 +159,7 @@ export const FileUpload = React.forwardRef<HTMLDivElement, FileUploadProps>(
           }}
           className={cn(
             'flex cursor-pointer flex-col items-center justify-center gap-1 rounded-md border border-dashed border-input bg-background px-md py-lg text-center transition-colors',
-            'hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+            'hover:border-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
             dragging && 'border-primary bg-accent',
             disabled && 'cursor-not-allowed opacity-50',
             error && 'border-destructive',

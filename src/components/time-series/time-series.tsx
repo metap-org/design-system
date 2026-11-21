@@ -82,7 +82,12 @@ export function TimeSeries({
       ))}
       {/* Only the ends are labelled — a dense axis on a 640-wide viewBox that scales down to a
           phone becomes unreadable overlap, and the per-point tooltip already carries the detail. */}
-      <text x={padding.left} y={height - 6} className="text-[10px]" fill="hsl(var(--muted-foreground))">
+      <text
+        x={padding.left}
+        y={height - 6}
+        className="text-[10px]"
+        fill="hsl(var(--muted-foreground))"
+      >
         {points[0]?.label}
       </text>
       <text

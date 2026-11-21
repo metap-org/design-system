@@ -82,9 +82,9 @@ export function CommandPalette({
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-foreground/50 transition-opacity duration-200 data-[state=closed]:opacity-0 data-[state=open]:opacity-100" />
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-foreground/50 backdrop-blur-[2px] data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out" />
         <DialogPrimitive.Content
-          className="fixed left-1/2 top-24 z-50 w-full max-w-lg -translate-x-1/2 overflow-hidden rounded-lg border border-border bg-background shadow-lg transition-[opacity,transform] duration-200 data-[state=closed]:scale-95 data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100"
+          className="fixed left-1/2 top-24 z-50 w-full max-w-lg -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-background shadow-lg data-[state=open]:animate-dialog-in data-[state=closed]:animate-dialog-out"
           onOpenAutoFocus={(event) => {
             event.preventDefault()
             inputRef.current?.focus()
@@ -104,7 +104,9 @@ export function CommandPalette({
           />
           <ul role="listbox" className="max-h-80 overflow-y-auto p-1">
             {filtered.length === 0 ? (
-              <li className="px-sm py-4 text-center text-sm text-muted-foreground">{emptyMessage}</li>
+              <li className="px-sm py-4 text-center text-sm text-muted-foreground">
+                {emptyMessage}
+              </li>
             ) : (
               filtered.map((item, index) => (
                 <li

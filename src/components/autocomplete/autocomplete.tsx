@@ -208,7 +208,7 @@ export const Autocomplete = React.forwardRef<HTMLInputElement, AutocompleteProps
               'flex h-10 w-full rounded-md border border-input bg-background px-md py-sm text-sm text-foreground',
               value ? 'pr-9' : '',
               'placeholder:text-muted-foreground',
-              'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+              'transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
               'disabled:cursor-not-allowed disabled:opacity-50',
               error && 'border-destructive focus-visible:ring-destructive',
               className

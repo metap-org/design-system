@@ -47,6 +47,7 @@ const lightVars: Record<string, string> = {
   '--chart-5': extractHsl(tokens.colors.chart[5]),
   '--font-sans': tokens.typography.fontFamily.sans,
   '--font-mono': tokens.typography.fontFamily.mono,
+  '--shadow-color': '222 47% 11%',
 }
 
 const darkVars: Record<string, string> = {
@@ -89,6 +90,7 @@ const darkVars: Record<string, string> = {
   '--chart-5': '262 83% 70%',
   '--font-sans': tokens.typography.fontFamily.sans,
   '--font-mono': tokens.typography.fontFamily.mono,
+  '--shadow-color': '0 0% 0%',
 }
 
 function varsToCSS(vars: Record<string, string>, indent: string): string {
@@ -105,6 +107,17 @@ const css = `@tailwind base;
 @layer base {
   html {
     font-family: var(--font-sans);
+  }
+
+  /* Motion is decoration here: a person who asked their system for less of it gets none. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   :root {

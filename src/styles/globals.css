@@ -8,6 +8,17 @@
     font-family: var(--font-sans);
   }
 
+  /* Motion is decoration here: a person who asked their system for less of it gets none. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -48,6 +59,7 @@
     --chart-5: 262 83% 58%;
     --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --shadow-color: 222 47% 11%;
   }
 
   .dark {
@@ -90,5 +102,6 @@
     --chart-5: 262 83% 70%;
     --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --shadow-color: 0 0% 0%;
   }
 }

@@ -56,7 +56,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           />
           <div
             className={cn(
-              'pointer-events-none h-4 w-4 rounded border border-input bg-background',
+              'pointer-events-none h-4 w-4 rounded-[5px] border border-input bg-background',
               'flex items-center justify-center transition-colors',
               (checked || indeterminate) && 'border-primary bg-primary',
               disabled && 'opacity-50'

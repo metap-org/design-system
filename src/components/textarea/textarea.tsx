@@ -27,9 +27,11 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           className={cn(
             'flex min-h-[80px] w-full rounded-md border border-input bg-background px-md py-sm text-sm text-foreground',
             'placeholder:text-muted-foreground',
-            'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+            'shadow-xs transition-[border-color,box-shadow] duration-150 hover:border-muted-foreground/40',
+            'focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/30',
             'disabled:cursor-not-allowed disabled:opacity-50',
-            error && 'border-destructive focus-visible:ring-destructive',
+            error &&
+              'border-destructive focus-visible:border-destructive focus-visible:ring-destructive/30',
             className
           )}
           {...props}
@@ -40,7 +42,9 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           </p>
         )}
         {!error && helperText && (
-          <p id={descId} className="text-sm text-muted-foreground">{helperText}</p>
+          <p id={descId} className="text-sm text-muted-foreground">
+            {helperText}
+          </p>
         )}
       </div>
     )
